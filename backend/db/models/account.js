@@ -10,7 +10,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Account.belongsTo(models.User, {
         foreignKey: "ownerId",
-        as: 'Owner'
+        // as: 'Owner',
+        onDelete: 'CASCADE'
       });
     }
   }
