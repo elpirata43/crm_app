@@ -6,7 +6,7 @@ module.exports = (sequelize) => {
   class User extends Model {
     static associate(models) {
       User.hasMany(models.Account, {
-        foreignKey: "ownerId",
+        foreignKey: 'ownerId',
       });
     }
   }
@@ -45,7 +45,7 @@ module.exports = (sequelize) => {
     },
     {
       sequelize,
-      modelName: "User",
+      modelName: 'User',
       defaultScope: {
         attributes: {
           exclude: ["hashedPassword", "email", "createdAt", "updatedAt"],

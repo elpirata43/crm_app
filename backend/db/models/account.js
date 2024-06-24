@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   class Account extends Model {
     static associate(models) {
       Account.belongsTo(models.User, {
-        foreignKey: "ownerId",
+        foreignKey: 'ownerId',
         as: 'Owner',
         onDelete: 'CASCADE'
       });
@@ -64,7 +64,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "Account",
+      modelName: 'Account',
     }
   );
   return Account;
