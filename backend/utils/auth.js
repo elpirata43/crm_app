@@ -8,30 +8,39 @@ const { secret, expiresIn } = jwtConfig;
 
 // Sends a JWT Cookie
 const setTokenCookie = (res, user) => {
-    // Create the token.
-    const safeUser = {
+  // Create the token.
+  const safeUser = {
       id: user.id,
       email: user.email,
       username: user.username,
-    };
-    const token = jwt.sign(
+  };
+
+  // Ensure expiresIn is an integer
+  const expiresInSec = parseInt(process.env.JWT_EXPIRES_IN, 10);
+  if (isNaN(expiresInSec)) {
+      throw new Error('Invalid expiresIn value');
+  }
+
+  const token = jwt.sign(
       { data: safeUser },
-      secret,
-      { expiresIn: parseInt(expiresIn) } // 604,800 seconds = 1 week
-    );
-  
-    const isProduction = process.env.NODE_ENV === "production";
-  
-    // Set the token cookie
-    res.cookie('token', token, {
-      maxAge: expiresIn * 1000, // maxAge in milliseconds
+      process.env.JWT_SECRET, // Use environment variable for the secret
+      { expiresIn: expiresInSec } // 604,800 seconds = 1 week
+  );
+
+  const isProduction = process.env.NODE_ENV === "production";
+
+  // Set the token cookie
+  res.cookie('token', token, {
+      maxAge: expiresInSec * 1000, // maxAge in milliseconds
       httpOnly: true,
       secure: isProduction,
       sameSite: isProduction && "Lax"
-    });
-  
-    return token;
-  };
+  });
+
+  console.log("Token", token);
+  return token;
+};
+
 
   const restoreUser = (req, res, next) => {
     // token parsed from cookies

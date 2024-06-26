@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createNewAccount } from "../store/accounts";
 import { useNavigate } from "react-router-dom";
 
+
 function CreateAccount({ account }) {
   const navigate = useNavigate();
   const user = useSelector((state) => state.session.user);
