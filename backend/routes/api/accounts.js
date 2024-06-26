@@ -89,7 +89,7 @@ router.get("/businessType/:business", async (req, res) => {
 router.get('/current', requireAuth, async(req,res,next) => {
   
     const account = await Account.findAll({
-        attributes: ['companyName', 'ownerId', 'businessType', 'id'],
+        // attributes: ['companyName', 'ownerId', 'businessType', 'id'],
         where: {
           ownerId: req.user.id
         },

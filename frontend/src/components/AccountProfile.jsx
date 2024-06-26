@@ -8,11 +8,11 @@ export default function AccountProfile() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const profile = useSelector((state) => state.accounts[id]);
-
+  const user = useSelector(state => state.session.user)
   // Debugging: Check the id and profile state
   console.log("Account ID:", id);
   console.log("Profile:", profile);
-
+console.log("User", user)
   // useEffect(() => {
   //     dispatch(fetchAccountProfile(id));
     
@@ -41,8 +41,10 @@ export default function AccountProfile() {
   };
 
   useEffect(() => {
-    // console.log('in here')
-    fetchAccounts();
+    if(user && user.id === profile.ownerId){
+
+      fetchAccounts();
+    }
   }, []);
 
   // const [account, setAccount] = useState({});
@@ -62,6 +64,19 @@ export default function AccountProfile() {
   return (
     <>
     <div>Account Profile</div>
+    {user && profile ? (
+      <>
+      <h2>{profile.companyName}</h2>
+      <p>Vocation: {profile.businessType}</p>
+      <p>Equipment: {profile.equipmentType}</p>
+      <p>Fleet Size: {profile.fleetSize}</p>
+      <p>Looking For: {profile.lookingFor}</p>
+      <p>Phone #: {profile.phoneNumber}</p>
+      <p>City: {profile.city}</p>
+      </>
+    ) : (
+      <div>Must be logged in</div>
+    ) }
     </>
   )
     

@@ -43,7 +43,7 @@ export default function DashBoard() {
       >
         <div>
           <h4>Accounts</h4>
-          {Object.values(accounts).map(account => (
+          {user && Object.values(accounts).map(account => (
           <div key={account.id}>
            <NavLink to={`/account/${account.id}`}><p>Company Name: {account.companyName}</p></NavLink>
           </div>
