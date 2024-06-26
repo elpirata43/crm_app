@@ -20,7 +20,7 @@ const setTokenCookie = (res, user) => {
   if (isNaN(expiresInSec)) {
       throw new Error('Invalid expiresIn value');
   }
-
+console.log(expiresInSec)
   const token = jwt.sign(
       { data: safeUser },
       process.env.JWT_SECRET, // Use environment variable for the secret
