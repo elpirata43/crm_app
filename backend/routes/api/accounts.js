@@ -15,9 +15,9 @@ const router = express.Router();
 // Find Account by id
 router.get('/company/:accountId', async (req, res, next) => {
     const accountId = req.params.accountId;
-
+console.log("In Find Account")
     try {
-      const account = await Account.findByPk(accountId);
+      const account = await Account.findByPk(req.params.accountId);
       if (!account) {
         res.status(404).json({ error: 'Account not found' });
         return;

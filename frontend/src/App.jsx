@@ -9,6 +9,7 @@ import CreateAccount from './components/CreateAccount'
 import Login from './components/Login'
 import Signup from './components/SignUp';
 import FilterAccounts from './components/FilterAccounts';
+import AccountProfile from './components/AccountProfile';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
       {
         path: '/signup',
         element: <Signup />
+      },
+      {
+        path: '/account/:id',
+        element: <AccountProfile />
       }
     ]
   }

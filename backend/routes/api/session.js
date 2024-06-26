@@ -73,8 +73,9 @@ router.post(
         email: user.email,
         username: user.username,
       };
+      console.log("response", res)
   
-      await setTokenCookie(res, safeUser);
+      await setTokenCookie(res, user);
   
       return res.json({
         user: safeUser

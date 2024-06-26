@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import * as sessionActions from "../store/session";
+import { fetchUserAccounts } from "../store/accounts";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -10,9 +11,11 @@ export default function Header() {
   const logout = (e) => {
     e.preventDefault();
     dispatch(sessionActions.logout());
+    dispatch(fetchUserAccounts())
     // closeMenu();
     navigate("/");
   };
+
 
   return (
     <div

@@ -1,9 +1,16 @@
+import { act } from "react";
 import { csrfFetch } from "./csrf";
 
 const LOAD_ACCOUNTS = "accounts/loadAccounts";
 const USERS_ACCOUNTS = "accounts/userAccounts";
 const FILTER_ACCOUNTS = "accounts/filterAccounts";
 const CREATE_ACCOUNT = "accounts/createAccount"
+const ACCOUNT_PROFILE = "accounts/accountProfile"
+
+const accountProfile = (id) => ({
+  type: ACCOUNT_PROFILE,
+  payload: account
+})
 
 const loadAccounts = (payload) => ({
   type: LOAD_ACCOUNTS,
@@ -23,7 +30,20 @@ const filterAccounts = (payload) => ({
 const createAccount = (payload) => ({
   type: CREATE_ACCOUNT,
   payload
-})
+});
+
+export const fetchAccountProfile = (id) => async (dispatch) => {
+  console.log(parseInt(id))
+  try{
+    const res = await csrfFetch(`api/accounts/company/${id}`);
+    if(res.ok){
+      const data = await res.json();
+      dispatch(accountProfile(data))
+    }
+  }catch (err){
+    console.error("Error fetching Account Profile", err)
+  }
+}
 
 export const createNewAccount = (account) => async (dispatch) => { 
   try {
@@ -81,7 +101,7 @@ console.log("URL Route", urlRoute)
       }
 
       const data = await response.json();
-      console.log("Filtered Data", data)
+      // console.log("Filtered Data", data)
       dispatch(filterAccounts(data)); // Dispatch action with fetched data
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -130,6 +150,12 @@ const accountReducer = (state = initialState, action) => {
       const newState = { ...state };
       const newAccount = action.payload;
       newState[newAccount.id] = newAccount;
+      return newState
+    }
+    case ACCOUNT_PROFILE: {
+      const newState = { ...state };
+      console.log("Action", action.payload)
+      newState[action.payload.id] = action.payload
       return newState
     }
     default:

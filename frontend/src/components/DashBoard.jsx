@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 // import dayjs from "dayjs";
 import FilterAccounts from "./FilterAccounts";
+import AccountProfile from "./AccountProfile";
 // import { AccountContext } from "../App";
 import { fetchUserAccounts } from "../store/accounts";
 
@@ -44,7 +45,7 @@ export default function DashBoard() {
           <h4>Accounts</h4>
           {Object.values(accounts).map(account => (
           <div key={account.id}>
-            <p>Company Name: {account.companyName}</p>
+           <NavLink to={`/account/${account.id}`}><p>Company Name: {account.companyName}</p></NavLink>
           </div>
         ))}
         </div>

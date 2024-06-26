@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import SignUp from "./SignUp";
 import { Link, useNavigate } from "react-router-dom";
 import * as sessionActions from "../store/session";
@@ -18,7 +18,7 @@ import * as sessionActions from "../store/session";
 // }
 
 function Login() {
-
+const user = useSelector(state => state.session.user)
   const dispatch = useDispatch();
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
@@ -61,6 +61,10 @@ function Login() {
       setErrors({ demo: "Failed to log in as demo user. Please try again." });
     }
   };
+
+if(user){
+  return <div>Already logged in</div>
+}
 
   return (
     <>
