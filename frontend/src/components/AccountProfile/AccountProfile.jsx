@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import Profile from "./Profile";
+import Profile from "../Profile/Profile";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAccountProfile } from "../store/accounts";
+import { fetchAccountProfile } from "../../store/accounts";
 
 export default function AccountProfile() {
   const { id } = useParams();

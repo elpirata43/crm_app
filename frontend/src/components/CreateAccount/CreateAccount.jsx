@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createNewAccount } from "../store/accounts";
+import { createNewAccount } from "../../store/accounts";
 import { useNavigate } from "react-router-dom";
 
 

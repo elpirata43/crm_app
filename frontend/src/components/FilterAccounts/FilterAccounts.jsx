@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchFilterAccounts } from "../store/accounts";
+import { fetchFilterAccounts } from "../../store/accounts";
 
 function FilterAccounts() {
   const dispatch = useDispatch();

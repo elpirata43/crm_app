@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import SignUp from "./SignUp";
+import SignUp from "../Signup/Signup";
 import { Link, useNavigate } from "react-router-dom";
-import * as sessionActions from "../store/session";
+import * as sessionActions from "../../store/session";
 
 
 // useNavigate - react-router-dom

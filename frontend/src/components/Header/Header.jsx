@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import * as sessionActions from "../store/session";
-import { fetchUserAccounts } from "../store/accounts";
+import * as sessionActions from "../../store/session";
+import { fetchUserAccounts } from "../../store/accounts";
 
 export default function Header() {
   const navigate = useNavigate();
