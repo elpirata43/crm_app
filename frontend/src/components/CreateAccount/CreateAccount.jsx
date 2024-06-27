@@ -7,16 +7,16 @@ import "react-toastify/dist/ReactToastify.css";
 import Profile from "../Profile/Profile";
 
 const CreateAccount = () => {
-    const user = useSelector((state) => state.session.user);
-      const dispatch = useDispatch();
-      const navigate = useNavigate()
-  const [bread, showToast] = useState(false);
+  const user = useSelector((state) => state.session.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [bread, setBread] = useState(false);
   const [addressInfo, setAddressInfo] = useState({
     companyName: "",
     firstName: "",
     lastName: "",
     businessType: "",
-    equipmentType:"",
+    equipmentType: "",
     fleetSize: 1,
     lookingFor: "",
     email: "",
@@ -26,13 +26,15 @@ const CreateAccount = () => {
     state: "",
     zipCode: 0,
   });
- 
- 
-  useEffect(() => {
-    toast("Company Added!");
-  }, []);
- 
- 
+  
+  const showToast = () => {
+    toast.success("Profile saved successfully!");
+  };
+
+  // useEffect(() => {
+  //   toast("Company Added!");
+  // }, []);
+
   const handleChange = (e) => {
     switch (e.target.name) {
       case "firstName":
@@ -44,18 +46,22 @@ const CreateAccount = () => {
       case "companyName":
         setAddressInfo((pre) => ({ ...pre, companyName: e.target.value }));
         break;
-        case "equipmentType":
-          const { name, value, checked } = e.target;
-       
-          if (name === "equipmentType") {
-              setAddressInfo((prev) => {
-                  return { ...prev, equipmentType: checked ? [...prev.equipmentType, value] : prev.equipmentType.filter(item => item !== value) }
- 
-              });
-          }
- 
-          break;
-     
+      case "equipmentType":
+        const { name, value, checked } = e.target;
+
+        if (name === "equipmentType") {
+          setAddressInfo((prev) => {
+            return {
+              ...prev,
+              equipmentType: checked
+                ? [...prev.equipmentType, value]
+                : prev.equipmentType.filter((item) => item !== value),
+            };
+          });
+        }
+
+        break;
+
       case "email":
         setAddressInfo((pre) => ({ ...pre, email: e.target.value }));
         break;
@@ -90,24 +96,24 @@ const CreateAccount = () => {
         break;
     }
   };
- 
 
-    const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
 
     const processedEquipmentType = addressInfo.equipmentType.toString();
 
     const payload = {
-        ownerId: user.id,
-        ...addressInfo,
-        equipmentType: processedEquipmentType // Ensure this is a string
+      ownerId: user.id,
+      ...addressInfo,
+      equipmentType: processedEquipmentType, // Ensure this is a string
     };
-    
-console.log(payload)
-    let newAccount
+
+    console.log(payload);
+    let newAccount;
     try {
       const newAccount = await dispatch(createNewAccount(payload));
+      setBread(true);
+      showToast();
       navigate(`/account/${newAccount.id}`);
     } catch (err) {
       if (err.response) {
@@ -122,7 +128,7 @@ console.log(payload)
       }
     }
   };
- 
+
   // const handleSubmit = (e) => {
   //   e.preventDefault();
   //   console.log(addressInfo, "in here HS dashboard ");
@@ -144,20 +150,14 @@ console.log(payload)
   //     })
   //     .then((results) => {
   //       showToast(true);
- 
- 
+
   //       console.log(results);
   //     })
   //     .catch((err) => {
   //       console.log(err);
   //     });
   // };
- 
- 
- 
- 
- 
- 
+
   return (
     <>
       {bread && <ToastContainer />}
@@ -179,7 +179,7 @@ console.log(payload)
       />
     </>
   );
- };
+};
 
 // function CreateAccount({ account }) {
 //   const navigate = useNavigate();
@@ -201,13 +201,11 @@ console.log(payload)
 //     state: "",
 //     zipCode: 0,
 //   });
- 
- 
+
 //   // useEffect(() => {
 //   //   toast("Company Added!");
 //   // }, []);
- 
- 
+
 //   const handleChange = (e) => {
 //     console.log(addressInfo, e.target.name);
 //     switch (e.target.name) {
@@ -222,16 +220,16 @@ console.log(payload)
 //         break;
 //         case "equipmentType":
 //           const { name, value, checked } = e.target;
-       
+
 //           if (name === "equipmentType") {
 //               setAddressInfo((prev) => {
 //                   return { ...prev, equipmentType: checked ? [...prev.equipmentType, value] : prev.equipmentType.filter(item => item !== value) }
- 
+
 //               });
 //           }
- 
+
 //           break;
-     
+
 //       case "email":
 //         setAddressInfo((pre) => ({ ...pre, email: e.target.value }));
 //         break;
@@ -266,7 +264,6 @@ console.log(payload)
 //         break;
 //     }
 //   };
- 
 
 //   const handleSubmit = async (e) => {
 //     e.preventDefault();
