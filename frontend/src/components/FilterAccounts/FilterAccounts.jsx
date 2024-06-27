@@ -73,6 +73,7 @@ function FilterAccounts() {
           <option value="Delivery">Delivery</option>
           <option value="Freight Hauling">Freight Hauling</option>
           <option value="Landscaping">Landscaping</option>
+          <option value="Transport">Transport</option>
         </select>
       </div>
       <div className="filter-cards">
