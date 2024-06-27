@@ -40,13 +40,20 @@ const Profile = (props) => {
                   <div className="col-lg-6">
                     <div className="mb-3">
                       <label className="form-label">Business Type</label>
-                      <input
-                        name="businessType"
-                        value={props.businessType}
-                        onChange={props.handleChange}
-                        type="text"
-                        className="form-control"
-                      />
+                      <select
+          className="form-select"
+          value={props.businessType}
+          onChange={props.handleSelect}
+          name="business"
+        >
+          <option defaultValue>Open this select menu</option>
+          <option value="Construction">Construction</option>
+          <option value="Moving">Moving</option>
+          <option value="Delivery">Delivery</option>
+          <option value="Freight Hauling">Freight Hauling</option>
+          <option value="Landscaping">Landscaping</option>
+          <option value="Transport">Transport</option>
+        </select>
                     </div>
                   </div>
                 </div>

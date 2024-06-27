@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Profile from "../Profile/Profile";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAccountProfile } from "../../store/accounts";
@@ -7,12 +7,14 @@ import { fetchAccountProfile } from "../../store/accounts";
 export default function AccountProfile() {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const profile = useSelector((state) => state.accounts[id]);
   const user = useSelector(state => state.session.user)
   // Debugging: Check the id and profile state
   console.log("Account ID:", id);
   console.log("Profile:", profile);
 console.log("User", user)
+
   // useEffect(() => {
   //     dispatch(fetchAccountProfile(id));
     
@@ -59,11 +61,14 @@ console.log("User", user)
   //   zipCode: "",
   // });
 
- 
+ const handleUpdateButton = () => {
+  
+ }
 
   return (
     <>
     <div>Account Profile</div>
+    <button>Update Account</button>
     {user && profile ? (
       <>
       <h2>{profile.companyName}</h2>
