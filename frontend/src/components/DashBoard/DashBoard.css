@@ -1,0 +1,10 @@
+.account-filter {
+    display: flex;
+    
+}
+
+.dashboard-container {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}

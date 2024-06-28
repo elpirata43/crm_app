@@ -26,7 +26,7 @@ const CreateAccount = () => {
     state: "",
     zipCode: 0,
   });
-  
+
   const showToast = () => {
     toast.success("Profile saved successfully!");
   };
@@ -99,7 +99,6 @@ const CreateAccount = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const processedEquipmentType = addressInfo.equipmentType.toString();
 
     const payload = {
@@ -113,7 +112,7 @@ const CreateAccount = () => {
     try {
       const newAccount = await dispatch(createNewAccount(payload));
       setBread(true);
-      showToast();
+      showToast();  
       navigate(`/account/${newAccount.id}`);
     } catch (err) {
       if (err.response) {
