@@ -10,10 +10,13 @@ import Login from "./components/Login/Login";
 import Signup from "./components/SignUp/Signup";
 import FilterAccounts from "./components/FilterAccounts/FilterAccounts";
 import AccountProfile from "./components/AccountProfile/AccountProfile";
+import SalesOrderForm from "./components/SalesOrderForm/SalesOrderForm";
+import SalesOrder from "./components/SalesOrder/SalesOrder";
 
 function Layout() {
   const dispatch = useDispatch();
   // const [isLoaded, setIsLoaded] = useState(false);
+
 
   useEffect(() => {
     dispatch(sessionActions.restoreUser());
@@ -56,11 +59,21 @@ const router = createBrowserRouter([
         path: "/account/:id",
         element: <AccountProfile />,
       },
+      {
+        path: "/create-order",
+        element: <SalesOrderForm />
+      },
+      {
+        path: "/sales-order",
+        element: <SalesOrder />
+      }
     ],
   },
 ]);
 
 function App() {
+
+
   return <RouterProvider router={router} />;
 }
 

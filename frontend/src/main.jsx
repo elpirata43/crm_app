@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import "./index.css";
@@ -7,6 +7,7 @@ import configureStore from "./store";
 import { restoreCSRF, csrfFetch } from "./store/csrf";
 import * as sessionActions from "./store/session";
 import { ModalProvider } from "./context/Modal";
+import { OrderProvider } from "./context/OrderContext";
 
 const store = configureStore();
 
@@ -22,7 +23,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Provider store={store}>
       <ModalProvider>
-        <App />
+        <OrderProvider>
+        <App  />
+        </OrderProvider>
       </ModalProvider>
     </Provider>
   </React.StrictMode>

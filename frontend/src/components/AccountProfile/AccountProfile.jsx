@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import Profile from "../Profile/Profile";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAccountProfile } from "../../store/accounts";
+import './AccountProfile.css'
 
 export default function AccountProfile() {
   const { id } = useParams();
@@ -78,6 +79,10 @@ console.log("User", user)
       <p>Looking For: {profile.lookingFor}</p>
       <p>Phone #: {profile.phoneNumber}</p>
       <p>City: {profile.city}</p>
+      <div className="orders-container">
+        <span>Quotes</span>
+        <Link to={"/create-order"}><button>Create Sales Order</button></Link>
+      </div>
       </>
     ) : (
       <div>Must be logged in</div>
