@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const { Op } = require('sequelize')
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { Account, User } = require('../../db/models');
+const { Account, User, Order } = require('../../db/models');
 
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -15,9 +15,13 @@ const router = express.Router();
 // Find Account by id
 router.get('/company/:accountId', async (req, res, next) => {
     const accountId = req.params.accountId;
-console.log("In Find Account")
     try {
-      const account = await Account.findByPk(req.params.accountId);
+      const account = await Account.findByPk(req.params.accountId, {
+        include: [{
+          model: Order,
+          as: 'orders'
+        }]
+      });
       if (!account) {
         res.status(404).json({ error: 'Account not found' });
         return;
@@ -91,13 +95,17 @@ router.get('/current', requireAuth, async(req,res,next) => {
     const account = await Account.findAll({
         // attributes: ['companyName', 'ownerId', 'businessType', 'id'],
         where: {
-          ownerId: req.user.id
+          ownerId: req.user.id,
         },
         include: [{
           model: User,
           as: 'Owner',
           attributes: ['id'] 
-        }]
+        },
+      {
+        model: Order,
+        as: 'orders',
+      }]
     });
 
     if(!account){

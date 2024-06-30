@@ -1,59 +1,60 @@
 // SalesOrder.jsx
-import React, {useContext} from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, {useContext, useEffect } from 'react';
+import { useNavigate, useParams,  } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAccountProfile } from "../../store/accounts";
 import { OrderContext } from '../../context/OrderContext';
 import "./SalesOrder.css"
 
 const SalesOrder = () => {
   const navigate = useNavigate();
+  const { accountId } = useParams();
+  const dispatch = useDispatch();
+  const profile = useSelector((state) => state.accounts[accountId]);
+  const user = useSelector(state => state.session.user)
+  const accounts = useSelector(state => state.accounts)
 
-  const {
-    orderDetails,
-    handleChange,
-    handleAddBody,
-    handleRemoveBody,
-    handleAddExtra,
-    handleRemoveExtra,
-  } = useContext(OrderContext);
-
-  // const handleSavePageAsPDF = async () => {
-  //   const { ipcRenderer } = window.electron;
-  //   const filename = 'order'; // Change this to whatever filename you want
-  //   try {
-  //     const filePath = await ipcRenderer.invoke('save-page-pdf', filename);
-  //     console.log(`PDF saved successfully at ${filePath}`);
-  //   } catch (err) {
-  //     console.error('Error saving PDF:', err);
-  //   }
-  // };
+  const filteredOrders = [];
+Object.values(accounts).forEach(item => {
+  item.orders.forEach(x => {
+    if (x.accountId === user.id) {
+      filteredOrders.push(x); 
+    }
+  });
+});
+const accountOrders = filteredOrders.map(order => {
+  return order
+});
+const acctOrder = accountOrders.filter(order => order.id === user.id)
 
   return (
     <div>
       <h1>Sales Order Details</h1>
-      <p>Customer Name: {orderDetails.customerName}</p>
-      <p>Address: {orderDetails.address}</p>
-      <p>City: {orderDetails.city}</p>
-      <p>State: {orderDetails.state}</p>
-      <p>VIN: {orderDetails.vin}</p>
-      <p>Model: {orderDetails.model}</p>
-      <p>Year: {orderDetails.year}</p>
-      <p>Price: {orderDetails.price}</p>
-      <p>Sales Tax: {orderDetails.tax}</p>
-      <p>License Fee: {orderDetails.license}</p>
+      <p>Customer Name: {acctOrder[0].customerName}</p>
+      <p>Address: {acctOrder[0].address}</p>
+      <p>City: {acctOrder[0].city}</p>
+      <p>State: {acctOrder[0].state}</p>
+      <p>VIN: {acctOrder[0].vin}</p>
+      <p>Model: {acctOrder[0].model}</p>
+      <p>Year: {acctOrder[0].year}</p>
+      <p>Price: {acctOrder[0].price}</p>
+      <p>Sales Tax: {acctOrder[0].tax}</p>
+      <p>License Fee: {acctOrder[0].license}</p>
       <h2>Bodies</h2>
       <ul>
-        {orderDetails.bodies.map((body, index) => (
+        {/* {acctOrder.bodies.map((body, index) => (
           <li key={index}>{body}</li>
         ))}
       </ul>
       <h2>Extras</h2>
       <ul>
-        {orderDetails.extras.map((extra, index) => (
+        {acctOrder.extras.map((extra, index) => (
           <li key={index}>{extra}</li>
-        ))}
+        ))} */}
       </ul>
     </div>
   );
 };
 
 export default SalesOrder;
+

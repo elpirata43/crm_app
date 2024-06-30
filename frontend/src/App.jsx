@@ -64,7 +64,7 @@ const router = createBrowserRouter([
         element: <SalesOrderForm />
       },
       {
-        path: "/sales-order",
+        path: "/sales-order/:accountId",
         element: <SalesOrder />
       }
     ],
