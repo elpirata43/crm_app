@@ -10,6 +10,11 @@ module.exports = (sequelize, DataTypes) => {
         as: 'Owner',
         onDelete: 'CASCADE'
       });
+
+      Account.hasMany(models.Order, {
+        foreignKey: 'accountId',
+        as: 'account'
+      })
     }
   }
   Account.init(
