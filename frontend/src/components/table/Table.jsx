@@ -13,7 +13,7 @@ export default function Table({data, itemCount}) {
       <tbody>
         {data?.map((item, index) => (
           <tr key={index}>
-            <td className="tm_width_3">{`${itemCount ? index + 1 + '.' : ''} ${item.vin}`}</td>
+            <td className="tm_width_3">{`${itemCount ? index + 1 + '.' : ''} ${item.item}`}</td>
             <td className="tm_width_4">{item.desc}</td>
             <td className="tm_width_2">${item.price}</td>
             <td className="tm_width_1">{item.qty}</td>

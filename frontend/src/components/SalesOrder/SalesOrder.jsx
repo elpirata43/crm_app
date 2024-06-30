@@ -76,7 +76,7 @@ import Buttons from "../buttons/Buttons"
 import Table from "../table/Table"
 import Terms from "../termsAndConditions/Terms"
 import InvoiceToPayTo from "../invoiceToPayTo/InvoiceToPayTo"
-import Header from "../Navigation/Navigation"
+import Header from "../header/Header"
 import InvoiceInfo from "../invoiceInfo/InvoiceInfo"
 import PaymentInfo from "../paymentInfo/PaymentInfo"
 import SubTotal from "../subTotal/SubTotal"
@@ -90,14 +90,18 @@ const termsAndCondition = [
 ]
 
 export default function SalesOrder() {
+  const invoicePage = useRef();
 
   const { orderId } = useParams();
   const dispatch = useDispatch();
   const [orderData, setOrderData] = useState(null);
   const [isLoading, setIsLoading] = useState(true); // Loading state
 
-  const user = useSelector((state) => state.session.user);
-  const profile = useSelector((state) => state.accounts[orderId]);
+  const user = useSelector((state) => state.session?.user);
+  // const profile = useSelector((state) => {
+  //   console.log({state})
+  //   return state.accounts
+  // });
 
   const fetchAccounts = async () => {
     try {
@@ -110,6 +114,7 @@ export default function SalesOrder() {
       const data = await response.json();
       setOrderData(data); // Update state with fetched data
       setIsLoading(false); // Set loading to false once data is fetched
+      console.log({data})
     } catch (error) {
       console.error("Error fetching data:", error);
       setIsLoading(false); // Set loading to false in case of error
@@ -117,16 +122,17 @@ export default function SalesOrder() {
   };
 
   useEffect(() => {
-    if (user && profile) {
+    if (user && !orderData) {
       fetchAccounts();
     } else {
       setIsLoading(false); // Set loading to false if there's no user or profile
     }
-  }, [orderId, user, profile]); // Add necessary dependencies
+  }, [ user, orderData]); // Add necessary dependencies
 
   if (isLoading) {
     return <p>Loading order details...</p>;
   }
+ 
 
   if (!orderData) {
     return <p>No order data available.</p>;
@@ -135,84 +141,83 @@ export default function SalesOrder() {
 console.log(orderData)
 
 
-  // const tableData = [
-  //   {
-  //     item: `${orderData.vin}`,
-  //     desc: `${orderData.model}, ${orderData.year}`,
-  //     price: `${orderData.price}`,
-  //     qty: '1', 
-  //   },
-  // ]
+  const tableData = [
+    {
+      item: `${orderData.vin}`,
+      desc: `${orderData.model}, ${orderData.year}`,
+      price: `${orderData.price}`,
+      qty: '1', 
+    },
+  ]
 
-  // pageTitle('General');
-  // // download page
-  // const invoicePage = useRef();
+  pageTitle('General');
+  // download page
   
-  // // calculation
-  // const subTotal = tableData.reduce((total, item) => total + item.price * item.qty, 0);
-  // const taxPersent = `${orderData.tax}`;
-  // const licenseFee = parseInt(orderData.license, 10);
-  // const taxAmount = subTotal * taxPersent / 100;
-  // const grandTotal = (subTotal + licenseFee + taxAmount);
+  // calculation
+  const subTotal = tableData.reduce((total, item) => total + item.price * item.qty, 0);
+  const taxPersent = `${orderData.tax}`;
+  const licenseFee = parseInt(orderData.license, 10);
+  const taxAmount = subTotal * taxPersent / 100;
+  const grandTotal = (subTotal + licenseFee + taxAmount);
 
-  // return (
-  //   <>
-  //     <div className="tm_invoice tm_style1" id="tm_download_section" ref={invoicePage}>
-  //       <div className="tm_invoice_in">
-  //         {/* <Header
-  //           logo='/images/logo.svg'
-  //           title='Invoice'
-  //         /> */}
-  //         <InvoiceInfo
-  //           id='LL93784'
-  //         />
-  //         <div className="tm_invoice_head tm_mb10">
-  //           <InvoiceToPayTo 
-  //             title='Invoice To' 
-  //             subTitle={profile.companyName}
-  //             varient='tm_invoice_left'
-  //           />
-  //           {/* <InvoiceToPayTo
-  //             title='Pay To' 
-  //             subTitle='Laralink Ltd <br /> 86-90 Paul Street, London <br /> England EC2A 4NE <br /> demo@gmail.com'
-  //             varient='tm_invoice_right tm_text_right'
-  //           /> */}
-  //         </div>
-  //         <div className="tm_table tm_style1 tm_mb30">
-  //           <div className="tm_round_border">
-  //             <div className="tm_table_responsive">
-  //               <Table data={tableData} itemCount={true}/>
-  //             </div>
-  //           </div>
-  //           <div className="tm_invoice_footer">
-  //             {/* <PaymentInfo
-  //               varient='tm_left_footer'
-  //               title='Payment Info'
-  //               cardType='Cradit Card'
-  //               cardNumber='236***********928'
-  //               amount={grandTotal}
-  //             /> */}
-  //             <div className="tm_right_footer">
-  //               <SubTotal 
-  //                 subTotal={subTotal} 
-  //                 taxPersent={taxPersent} 
-  //                 licenseFee={licenseFee}
-  //                 taxAmount={taxAmount} 
-  //                 grandTotal={grandTotal}
-  //                 borderBtm={true}
-  //               />
-  //             </div>
-  //           </div>
-  //         </div>
-  //         <Terms 
-  //           varient='tm_round_border'
-  //           title='Terms & Conditions:' 
-  //           data={termsAndCondition}
-  //         />
-  //       </div>
-  //     </div>
-  //     <Buttons  invoicePage={invoicePage}/>
-  //   </>
-  // )
+  return (
+    <>
+      <div className="tm_invoice tm_style1" id="tm_download_section" ref={invoicePage}>
+        <div className="tm_invoice_in">
+          <Header
+            logo='/images/logo.svg'
+            title='Invoice'
+          />
+          <InvoiceInfo
+            id='LL93784'
+          />
+          <div className="tm_invoice_head tm_mb10">
+            <InvoiceToPayTo 
+              title='Invoice To' 
+              subTitle={orderData.account.companyName}
+              varient='tm_invoice_left'
+            />
+            {/* <InvoiceToPayTo
+              title='Pay To' 
+              subTitle='Laralink Ltd <br /> 86-90 Paul Street, London <br /> England EC2A 4NE <br /> demo@gmail.com'
+              varient='tm_invoice_right tm_text_right'
+            /> */}
+          </div>
+          <div className="tm_table tm_style1 tm_mb30">
+            <div className="tm_round_border">
+              <div className="tm_table_responsive">
+                <Table data={tableData} itemCount={true}/>
+              </div>
+            </div>
+            <div className="tm_invoice_footer">
+              {/* <PaymentInfo
+                varient='tm_left_footer'
+                title='Payment Info'
+                cardType='Cradit Card'
+                cardNumber='236***********928'
+                amount={grandTotal}
+              /> */}
+              <div className="tm_right_footer">
+                <SubTotal 
+                  subTotal={subTotal} 
+                  taxPersent={taxPersent} 
+                  licenseFee={licenseFee}
+                  taxAmount={taxAmount} 
+                  grandTotal={grandTotal}
+                  borderBtm={true}
+                />
+              </div>
+            </div>
+          </div>
+          <Terms 
+            varient='tm_round_border'
+            title='Terms & Conditions:' 
+            data={termsAndCondition}
+          />
+      <Buttons  invoicePage={invoicePage}/>
+        </div>
+      </div>
+    </>
+  )
 }
 

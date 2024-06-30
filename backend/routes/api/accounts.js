@@ -38,7 +38,12 @@ router.get('/company/:accountId', async (req, res, next) => {
   router.get('/orders/:id', async (req, res, next) => {
     const id = req.params.id;
     try {
-      const order = await Order.findByPk(req.params.id);
+      const order = await Order.findByPk(req.params.id, {
+        include: {
+          model: Account,
+          as: 'account', // Assuming you've defined 'account' as the alias in your Order model association
+        },
+      });
       if (!order) {
         res.status(404).json({ error: 'Order not found' });
         return;
