@@ -84,7 +84,11 @@ router.get("/businessType/:business", async (req, res) => {
       where:{
         ownerId: req.user.id,
         businessType: req.params.business
-      }
+      },
+      include: {
+        model: Order,
+        as: 'orders', // Assuming you've defined 'account' as the alias in your Order model association
+      },
     })
       return res.json(company)
   });
@@ -152,22 +156,25 @@ router.post('/', async (req, res, next) => {
 
   // Find by EquipmentType
   router.get("/equipmentType/:equipment", requireAuth, async (req, res, next) => {
-    const {equipment} = req.params
-    Account.findAll({
-      where:{
-        ownerId: req.user.id,
-        equipmentType: {
-          [Op.substring]: req.params.equipment 
-      },
-      
-      }
-    })
-      .then((equipment) => {
-        res.statusCode = 200;
-        res.setHeader("Content-Type", "application/json");
-        res.json(equipment);
-      })
-      .catch((err) => next(err));
+    const { equipment } = req.params;
+    try {
+      const accounts = await Account.findAll({
+        where: {
+          ownerId: req.user.id,
+          equipmentType: {
+            [Op.substring]: req.params.equipment,
+          },
+        },
+        include: {
+          model: Order,
+          as: 'orders', // Assuming you've defined 'account' as the alias in your Order model association
+        },
+      });
+  
+      res.status(200).json(accounts);
+    } catch (err) {
+      next(err);
+    }
   });
 
 // Find by CompanyName
@@ -177,7 +184,11 @@ router.get("/companyName/:companyName", requireAuth, async (req, res) => {
     where:{
       ownerId: req.user.id,
       companyName: companyName
-    }
+    },
+    include: {
+      model: Order,
+      as: 'orders', // Assuming you've defined 'account' as the alias in your Order model association
+    },
   })
     .then((companyName) => {
       res.statusCode = 200;
@@ -197,7 +208,11 @@ router.get("/lookingFor/:equipment", requireAuth, async (req, res, next) => {
       lookingFor: {
         [Op.substring]: req.params.equipment 
     },
-    }
+    },
+    include: {
+      model: Order,
+      as: 'orders', // Assuming you've defined 'account' as the alias in your Order model association
+    },
   })
     .then((equipment) => {
       res.statusCode = 200;
