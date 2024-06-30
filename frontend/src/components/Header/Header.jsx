@@ -1,41 +1,15 @@
-import React, { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import * as sessionActions from "../../store/session";
-import { fetchUserAccounts } from "../../store/accounts";
 
-export default function Header() {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  
-  const logout = (e) => {
-    e.preventDefault();
-    dispatch(sessionActions.logout());
-    dispatch(fetchUserAccounts())
-    // closeMenu();
-    navigate("/");
-  };
-
-
+export default function Header({logo, title}) {
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "center",
-        border: "solid",
-        background: "black",
-      }}
-    >
-      <Link to={"/"}>
-      <button>DashBoard</button>
-      </Link>
-      <Link to="/Login">
-        <button>Login</button>
-      </Link>
-      <Link to={"/CreateAccount"}><button>Create Account</button></Link>
-      <button onClick={logout}>Logout</button>
+    <div className="tm_invoice_head tm_align_center tm_mb20">
+      <div className="tm_invoice_left">
+        <div className="tm_logo">
+          <img src={logo} alt="Logo" />
+        </div>
+      </div>
+      <div className="tm_invoice_right tm_text_right">
+        <div className="tm_primary_color tm_f50 tm_text_uppercase">{title}</div>
+      </div>
     </div>
-  );
+  )
 }

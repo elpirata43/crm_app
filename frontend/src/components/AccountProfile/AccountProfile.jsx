@@ -12,7 +12,9 @@ export default function AccountProfile() {
   const profile = useSelector((state) => state.accounts[id]);
   const user = useSelector(state => state.session.user)
 
- 
+  profile.orders.map(order => {
+    console.log(order.id)
+  })
 
   const fetchAccounts = async () => {
     try {

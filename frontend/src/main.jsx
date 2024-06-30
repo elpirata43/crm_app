@@ -8,6 +8,9 @@ import { restoreCSRF, csrfFetch } from "./store/csrf";
 import * as sessionActions from "./store/session";
 import { ModalProvider } from "./context/Modal";
 import { OrderProvider } from "./context/OrderContext";
+import './landing-css/landing.css'
+import './sass/style.scss'
+
 
 const store = configureStore();
 

@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import * as sessionActions from "./store/session";
 // import { Modal } from "./context/Modal";
-import Header from "./components/Header/Header";
+import Header from "./components/Navigation/Navigation";
 import DashBoard from "./components/DashBoard/DashBoard";
 import CreateAccount from "./components/CreateAccount/CreateAccount";
 import Login from "./components/Login/Login";
@@ -64,9 +64,9 @@ const router = createBrowserRouter([
         element: <SalesOrderForm />
       },
       {
-        path: "/sales-order/:accountId",
+        path: "/sales-order/:orderId",
         element: <SalesOrder />
-      }
+      },
     ],
   },
 ]);

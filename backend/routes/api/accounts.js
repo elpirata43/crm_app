@@ -34,6 +34,23 @@ router.get('/company/:accountId', async (req, res, next) => {
     }
   });
 
+  // Get Account Order
+  router.get('/orders/:id', async (req, res, next) => {
+    const id = req.params.id;
+    try {
+      const order = await Order.findByPk(req.params.id);
+      if (!order) {
+        res.status(404).json({ error: 'Order not found' });
+        return;
+      }
+
+      res.status(200).json(order);
+    } catch (error) {
+      console.error('Error fetching order:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
+
   // Update Account
   router.put('/company/:accountId', requireAuth, async (req, res, next) => {
     const accountId = req.params.accountId;
