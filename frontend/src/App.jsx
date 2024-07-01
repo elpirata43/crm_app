@@ -60,7 +60,7 @@ const router = createBrowserRouter([
         element: <AccountProfile />,
       },
       {
-        path: "/create-order",
+        path: "/create-order/:id",
         element: <SalesOrderForm />
       },
       {
@@ -78,3 +78,4 @@ function App() {
 }
 
 export default App;
+

@@ -1,9 +1,25 @@
-import React, { useContext } from "react";
-import {  useNavigate } from 'react-router-dom'
+import React, { useContext, useEffect, useState } from "react";
+import {  useNavigate, useParams } from 'react-router-dom'
 import { OrderContext } from "../../context/OrderContext";
 import "./SalesOrderForm.css"
+import { useSelector, useDispatch } from "react-redux";
+import { createNewOrder } from "../../store/orders";
 
 const SalesOrderForm = () => {
+  const { id } = useParams();
+  const dispatch = useDispatch()
+  const [companyInfo, setCompanyInfo] = useState({
+    companyName: "",
+    address: "",
+    city: "",
+    state: "",
+    zipCode: null,
+    email: ""
+  })
+  const user = useSelector(state => state.session.user)
+
+// console.log(typeof id)
+
     const navigate = useNavigate();
     const {
       orderDetails,
@@ -14,44 +30,63 @@ const SalesOrderForm = () => {
       handleRemoveExtra,
     } = useContext(OrderContext);
 
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      navigate("/sales-order");
+    const fetchAccounts = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8000/api/accounts/company/${id}`,
+          {
+            method: "GET",
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch data");
+        }
+        const data = await response.json();
+        setCompanyInfo(data)
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     };
+  
+    useEffect(() => {
+      if(user){
+  
+        fetchAccounts();
+      }
+    }, []);
+  
+
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+
+      const payload = {
+        accountId: parseInt(id),
+        ...orderDetails
+      };
+      console.log({payload})
+
+      let newOrder;
+      try{
+       const newOrder = await dispatch(createNewOrder(id, payload))
+       console.log({newOrder})
+      }catch (err){
+        console.error(err)
+      }
+
+      // navigate(`/sales-order/${newOrder.id}`);
+    };
+
+
   return (
     <div className="App">
       <header className="App-header">
         <h1>Create Sales Order</h1>
         <form className="company" onSubmit={handleSubmit}>
-          <input
-            type="text"
-            name="customerName"
-            placeholder="Customer Name"
-            value={orderDetails.customerName}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            name="address"
-            placeholder="Address"
-            value={orderDetails.address}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            name="city"
-            placeholder="City"
-            value={orderDetails.city}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            name="state"
-            placeholder="State"
-            value={orderDetails.state}
-            onChange={handleChange}
-          />
-
+        <h3>Bill To:</h3>
+        <span>{companyInfo.companyName}</span>
+        <span>{companyInfo.address}</span>
+        <p>{companyInfo.city}, {companyInfo.state} {companyInfo.zipCode}</p>
+        <span></span>
           <br />
           <input
             type="text"
@@ -89,7 +124,7 @@ const SalesOrderForm = () => {
             value={orderDetails.price}
             onChange={handleChange}
           />
-          {orderDetails.bodies.map((body, index) => (
+          {/* {orderDetails.bodies.map((body, index) => (
             <div key={index}>
               <input
                 type="text"
@@ -129,7 +164,7 @@ const SalesOrderForm = () => {
                 Remove Extra
               </button>
             </div>
-          ))}
+          ))} */}
           <input
             type="text"
             name="tax"
@@ -162,3 +197,4 @@ const SalesOrderForm = () => {
 };
 
 export default SalesOrderForm;
+

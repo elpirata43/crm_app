@@ -607,7 +607,9 @@ hr {
   }
   .tm_logo {
     img {
-      max-height: 50px;
+
+      max-height: 80px;
+
     }
     &.tm_size1 {
       img {
@@ -619,6 +621,9 @@ hr {
         max-height: 70px;
       }
     }
+
+    max-width: 1000px;
+
   }
   .tm_grand_total {
     padding: 8px 15px;
