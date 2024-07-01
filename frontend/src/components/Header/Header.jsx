@@ -1,5 +1,6 @@
+import logo from '../../../public/peterson-img.png'
 
-export default function Header({logo, title}) {
+export default function Header({ title}) {
   return (
     <div className="tm_invoice_head tm_align_center tm_mb20">
       <div className="tm_invoice_left">
