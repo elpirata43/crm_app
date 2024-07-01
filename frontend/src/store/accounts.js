@@ -6,6 +6,13 @@ const USERS_ACCOUNTS = "accounts/userAccounts";
 const FILTER_ACCOUNTS = "accounts/filterAccounts";
 const CREATE_ACCOUNT = "accounts/createAccount"
 const ACCOUNT_PROFILE = "accounts/accountProfile"
+const ACCOUNT_ORDERS = "accounts/accountOrders";
+
+const accountOrders = (orders) => ({
+  type: ACCOUNT_ORDERS,
+  payload: orders,
+});
+
 
 const accountProfile = (id) => ({
   type: ACCOUNT_PROFILE,
@@ -31,6 +38,20 @@ const createAccount = (payload) => ({
   type: CREATE_ACCOUNT,
   payload
 });
+
+export const fetchAccountOrders = (id) => async (dispatch) => {
+  try {
+    const res = await csrfFetch(`/api/orders/${id}`);
+    if (res.ok) {
+      const data = await res.json();
+      console.log(data)
+      dispatch(accountOrders(data));
+    }
+  } catch (err) {
+    console.error("Error loading accounts", err);
+  }
+};
+
 
 export const fetchAccountProfile = (id) => async (dispatch) => {
   console.log(parseInt(id))
@@ -120,7 +141,10 @@ export const fetchUserAccounts = () => async (dispatch) => {
   }
 };
 
-const initialState = {};
+const initialState = {
+  accounts: {},
+  orders: {},
+};
 
 const accountReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -157,6 +181,16 @@ const accountReducer = (state = initialState, action) => {
       console.log("Action", action.payload)
       newState[action.payload.id] = action.payload
       return newState
+    }
+    case ACCOUNT_ORDERS: {
+      const orders = action.payload.orders;
+      return {
+        ...state,
+        orders: {
+          ...state.orders,
+          ...orders,
+        },
+      };
     }
     default:
       return state;

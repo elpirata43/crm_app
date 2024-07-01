@@ -6,7 +6,7 @@ import FilterAccounts from "../FilterAccounts/FilterAccounts";
 import AccountProfile from "../AccountProfile/AccountProfile";
 // import { AccountContext } from "../App";
 import { fetchUserAccounts } from "../../store/accounts";
-
+import './DashBoard.css'
 
 export default function DashBoard() {
   // const [account, setAccount] = useContext(AccountContext);
@@ -30,7 +30,7 @@ export default function DashBoard() {
   }
 
   return (
-    <div className="d-flex">
+    <div className="dashboard-container">
       <div
         style={{
           display: "flex",
@@ -50,11 +50,13 @@ export default function DashBoard() {
         ))}
         </div>
       </div>
+      <div className="account-filter">
       {Object.values(accounts).length > 0 ? (
         <FilterAccounts  />
       ) : (
         <FilterAccounts />
       )}
+      </div>
     </div>
   );
 }

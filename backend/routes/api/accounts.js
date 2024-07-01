@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const { Op } = require('sequelize')
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { Account, User } = require('../../db/models');
+const { Account, User, Order } = require('../../db/models');
 
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -15,9 +15,13 @@ const router = express.Router();
 // Find Account by id
 router.get('/company/:accountId', async (req, res, next) => {
     const accountId = req.params.accountId;
-console.log("In Find Account")
     try {
-      const account = await Account.findByPk(req.params.accountId);
+      const account = await Account.findByPk(req.params.accountId, {
+        include: [{
+          model: Order,
+          as: 'orders'
+        }]
+      });
       if (!account) {
         res.status(404).json({ error: 'Account not found' });
         return;
@@ -26,6 +30,28 @@ console.log("In Find Account")
       res.status(200).json(account);
     } catch (error) {
       console.error('Error fetching account:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
+
+  // Get Account Order
+  router.get('/orders/:id', async (req, res, next) => {
+    const id = req.params.id;
+    try {
+      const order = await Order.findByPk(req.params.id, {
+        include: {
+          model: Account,
+          as: 'account', // Assuming you've defined 'account' as the alias in your Order model association
+        },
+      });
+      if (!order) {
+        res.status(404).json({ error: 'Order not found' });
+        return;
+      }
+
+      res.status(200).json(order);
+    } catch (error) {
+      console.error('Error fetching order:', error);
       res.status(500).json({ error: 'Internal Server Error' });
     }
   });
@@ -80,7 +106,11 @@ router.get("/businessType/:business", async (req, res) => {
       where:{
         ownerId: req.user.id,
         businessType: req.params.business
-      }
+      },
+      include: {
+        model: Order,
+        as: 'orders', // Assuming you've defined 'account' as the alias in your Order model association
+      },
     })
       return res.json(company)
   });
@@ -91,13 +121,17 @@ router.get('/current', requireAuth, async(req,res,next) => {
     const account = await Account.findAll({
         // attributes: ['companyName', 'ownerId', 'businessType', 'id'],
         where: {
-          ownerId: req.user.id
+          ownerId: req.user.id,
         },
         include: [{
           model: User,
           as: 'Owner',
           attributes: ['id'] 
-        }]
+        },
+      {
+        model: Order,
+        as: 'orders',
+      }]
     });
 
     if(!account){
@@ -144,22 +178,25 @@ router.post('/', async (req, res, next) => {
 
   // Find by EquipmentType
   router.get("/equipmentType/:equipment", requireAuth, async (req, res, next) => {
-    const {equipment} = req.params
-    Account.findAll({
-      where:{
-        ownerId: req.user.id,
-        equipmentType: {
-          [Op.substring]: req.params.equipment 
-      },
-      
-      }
-    })
-      .then((equipment) => {
-        res.statusCode = 200;
-        res.setHeader("Content-Type", "application/json");
-        res.json(equipment);
-      })
-      .catch((err) => next(err));
+    const { equipment } = req.params;
+    try {
+      const accounts = await Account.findAll({
+        where: {
+          ownerId: req.user.id,
+          equipmentType: {
+            [Op.substring]: req.params.equipment,
+          },
+        },
+        include: {
+          model: Order,
+          as: 'orders', // Assuming you've defined 'account' as the alias in your Order model association
+        },
+      });
+  
+      res.status(200).json(accounts);
+    } catch (err) {
+      next(err);
+    }
   });
 
 // Find by CompanyName
@@ -169,7 +206,11 @@ router.get("/companyName/:companyName", requireAuth, async (req, res) => {
     where:{
       ownerId: req.user.id,
       companyName: companyName
-    }
+    },
+    include: {
+      model: Order,
+      as: 'orders', // Assuming you've defined 'account' as the alias in your Order model association
+    },
   })
     .then((companyName) => {
       res.statusCode = 200;
@@ -189,7 +230,11 @@ router.get("/lookingFor/:equipment", requireAuth, async (req, res, next) => {
       lookingFor: {
         [Op.substring]: req.params.equipment 
     },
-    }
+    },
+    include: {
+      model: Order,
+      as: 'orders', // Assuming you've defined 'account' as the alias in your Order model association
+    },
   })
     .then((equipment) => {
       res.statusCode = 200;

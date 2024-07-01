@@ -54,7 +54,7 @@ const user = useSelector(state => state.session.user)
       await dispatch(
         sessionActions.login({ credential: "FakerUser1", password: "password" })
       );
-      closeModal();
+      // closeModal();
       navigate("/");
     } catch (err) {
       console.error("Failed to log in as demo user:", err);

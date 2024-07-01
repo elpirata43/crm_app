@@ -2,6 +2,7 @@ import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import sessionReducer from './session';
 import accountReducer from './accounts';
+import orderReducer from './orders';
 
 const rootReducer = combineReducers({
   session: sessionReducer,
