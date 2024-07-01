@@ -12,6 +12,8 @@ export default function AccountProfile() {
   const profile = useSelector((state) => state.accounts[id]);
   const user = useSelector(state => state.session.user)
 
+  const acctId = parseInt(id)
+
   profile.orders.map(order => {
     console.log(order.id)
   })
@@ -56,7 +58,7 @@ export default function AccountProfile() {
       <p>City: {profile.city}</p>
       <div className="orders-container">
         <span>Quotes</span>
-        <Link to={"/create-order"}><button>Create Sales Order</button></Link>
+        <Link to={`/create-order/${acctId}`}><button>Create Sales Order</button></Link>
         {profile.orders && profile.orders.length > 0 ? (
                 profile.orders.map((order, index) => (
                   <div key={index}>

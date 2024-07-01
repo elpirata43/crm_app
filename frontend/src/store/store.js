@@ -7,6 +7,7 @@ import orderReducer from './orders';
 const rootReducer = combineReducers({
   session: sessionReducer,
   accounts: accountReducer,
+  orders: orderReducer
 });
 
 let enhancer;

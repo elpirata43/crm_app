@@ -4,18 +4,14 @@ export const OrderContext = createContext();
 
 export const OrderProvider = ({ children }) => {
   const [orderDetails, setOrderDetails] = useState({
-    customerName: "",
-    address: "",
-    city: "",
-    state: "",
     vin: "",
     model: "",
     year: "",
     price: "",
     tax: "",
     license: "",
-    bodies: [],
-    extras: [],
+    bodies: "",
+    extras: "",
   });
 
   const handleChange = (e) => {
