@@ -335,3 +335,4 @@ router.get("/location/:city", requireAuth, async (req, res, next) => {
 });
 
 module.exports = router;
+
