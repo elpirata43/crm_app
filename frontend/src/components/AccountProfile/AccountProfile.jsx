@@ -12,6 +12,7 @@ export default function AccountProfile() {
   const profile = useSelector((state) => state.accounts[id]);
   const user = useSelector(state => state.session.user)
 
+
   const acctId = parseInt(id)
 
   // profile.orders.map(order => {
@@ -36,7 +37,7 @@ export default function AccountProfile() {
   };
 
   useEffect(() => {
-    if(user && user.id === profile.ownerId){
+    if(user && profile && user.id === profile.ownerId){
 
       fetchAccounts();
     }

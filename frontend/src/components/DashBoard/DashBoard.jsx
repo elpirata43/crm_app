@@ -6,7 +6,7 @@ import FilterAccounts from "../FilterAccounts/FilterAccounts";
 import AccountProfile from "../AccountProfile/AccountProfile";
 // import { AccountContext } from "../App";
 import { fetchUserAccounts } from "../../store/accounts";
-import './DashBoard.css'
+import "./DashBoard.css";
 
 export default function DashBoard() {
   // const [account, setAccount] = useContext(AccountContext);
@@ -14,8 +14,7 @@ export default function DashBoard() {
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.session.user);
-  const accounts = useSelector(state => state.accounts)
-
+  const accounts = useSelector((state) => state.accounts);
 
   useEffect(() => {
     dispatch(fetchUserAccounts());
@@ -43,19 +42,23 @@ export default function DashBoard() {
       >
         <div>
           <h4>Accounts</h4>
-          {user && Object.values(accounts).map(account => (
-          <div key={account.id}>
-           <NavLink to={`/account/${account.id}`}><p>Company Name: {account.companyName}</p></NavLink>
-          </div>
-        ))}
+          {user &&
+            accounts &&
+            Object.values(accounts).map((account) => (
+              <div key={account.id}>
+                <NavLink to={`/account/${account.id}`}>
+                  <p>Company Name: {account.companyName}</p>
+                </NavLink>
+              </div>
+            ))}
         </div>
       </div>
       <div className="account-filter">
-      {Object.values(accounts).length > 0 ? (
-        <FilterAccounts  />
-      ) : (
-        <FilterAccounts />
-      )}
+        {Object.values(accounts).length > 0 ? (
+          <FilterAccounts />
+        ) : (
+          <FilterAccounts />
+        )}
       </div>
     </div>
   );
