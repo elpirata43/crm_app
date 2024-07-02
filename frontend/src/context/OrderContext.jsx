@@ -10,8 +10,8 @@ export const OrderProvider = ({ children }) => {
     price: "",
     tax: "",
     license: "",
-    bodies: 0,
-    extras: 0,
+    bodies: null,
+    extras: null,
     notes: "",
     condition: ""
   });
