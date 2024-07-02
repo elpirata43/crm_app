@@ -172,7 +172,6 @@ const CreateAccount = () => {
         email={addressInfo.email}
         phoneNumber={addressInfo.phoneNumber}
         address={addressInfo.address}
-        address2={addressInfo.address2}
         city={addressInfo.city}
         zipCode={addressInfo.zipCode}
       />

@@ -12,10 +12,6 @@ import PaymentInfo from "../paymentInfo/PaymentInfo";
 import SubTotal from "../subTotal/SubTotal";
 import { pageTitle } from "../../helper/helper";
 
-// const termsAndCondition = [
-//   'All claims relating to quantity or shipping errors shall be waived by Buyer unless made in writing to Seller within thirty (30) days after delivery of goods to the address stated.',
-//   'Delivery dates are not guaranteed and Seller has no liability for damages that may be incurred due to any delay in shipment of goods hereunder. Taxes are excluded unless otherwise stated.'
-// ]
 
 const termsAndCondition = `
   This agreement and any documents which are part of this transaction or incorporated herein comprise the entire agreement affecting this Retail Purchase Agreement
@@ -75,12 +71,10 @@ export default function SalesOrder() {
     return <p>No order data available.</p>;
   }
 
-  console.log(orderData);
-
   const tableData = [
     {
       item: `${orderData.vin}`,
-      desc: `${orderData.model}, ${orderData.year}`,
+      desc: `${orderData.condition}, ${orderData.model}, ${orderData.year}`,
       price: `${orderData.price}`,
       qty: "1",
     },
@@ -97,7 +91,18 @@ export default function SalesOrder() {
   const taxPersent = `${orderData.tax}`;
   const licenseFee = parseInt(orderData.license, 10);
   const taxAmount = (subTotal * taxPersent) / 100;
-  const grandTotal = subTotal + licenseFee + taxAmount;
+  let grandTotal;
+   if(orderData.bodies && orderData.extras){
+    grandTotal = subTotal + licenseFee + taxAmount + orderData.bodies + orderData.extras
+  }else if (orderData.bodies){
+   grandTotal = subTotal + licenseFee + taxAmount + orderData.bodies
+  } else if (orderData.extras){
+    grandTotal = subTotal + licenseFee + taxAmount + orderData.extras
+  } else {
+    grandTotal = subTotal + licenseFee + taxAmount
+  };
+
+
 
   return (
     <>
@@ -129,19 +134,14 @@ export default function SalesOrder() {
           <div className="tm_table tm_style1 tm_mb30">
             <div className="tm_round_border">
               <div className="tm_table_responsive">
-                <Table data={tableData} itemCount={true} />
+                <Table data={tableData} itemCount={false} />
               </div>
             </div>
             <div className="tm_invoice_footer">
-              {/* <PaymentInfo
-                varient='tm_left_footer'
-                title='Payment Info'
-                cardType='Cradit Card'
-                cardNumber='236***********928'
-                amount={grandTotal}
-              /> */}
               <div className="tm_right_footer">
                 <SubTotal
+                  body={orderData.bodies ? orderData.bodies : 0}
+                  extras={orderData.extras ? orderData.extras : 0}
                   subTotal={subTotal}
                   taxPersent={taxPersent}
                   licenseFee={licenseFee}

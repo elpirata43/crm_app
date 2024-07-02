@@ -30,28 +30,32 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
+      condition: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       price: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DECIMAL(10,2),
         allowNull: false,
       },
       tax: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DECIMAL(4, 2),
         allowNull: false,
       },
       license: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DECIMAL(10,2),
         allowNull: false,
       },
       bodies: {
-        type: DataTypes.STRING,
+        type: DataTypes.DECIMAL(10,2),
         allowNull: true,
       },
       extras: {
-        type: DataTypes.STRING,
+        type: DataTypes.DECIMAL(10,2),
         allowNull: true,
       },
       notes: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: true,
       },
     },

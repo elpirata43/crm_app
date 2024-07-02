@@ -14,7 +14,9 @@ const SalesOrderForm = () => {
     city: "",
     state: "",
     zipCode: null,
-    email: ""
+    email: "",
+    bodies: 0,
+    extras: 0
   })
   const user = useSelector(state => state.session.user)
 
@@ -23,11 +25,8 @@ const SalesOrderForm = () => {
     const navigate = useNavigate();
     const {
       orderDetails,
+      setOrderDetails,
       handleChange,
-      handleAddBody,
-      handleRemoveBody,
-      handleAddExtra,
-      handleRemoveExtra,
     } = useContext(OrderContext);
 
     const fetchAccounts = async () => {
@@ -124,47 +123,20 @@ const SalesOrderForm = () => {
             value={orderDetails.price}
             onChange={handleChange}
           />
-          {/* {orderDetails.bodies.map((body, index) => (
-            <div key={index}>
-              <input
-                type="text"
-                placeholder="Body"
-                value={body}
-                onChange={(e) => {
-                  const updatedBodies = [...orderDetails.bodies];
-                  updatedBodies[index] = e.target.value;
-                  setOrderDetails({ ...orderDetails, bodies: updatedBodies });
-                }}
-              />
-              <button
-                type="button"
-                onClick={() => handleRemoveBody(index)}
-              >
-                Remove Body
-              </button>
-            </div>
-          ))}
-
-          {orderDetails.extras.map((extra, index) => (
-            <div key={index}>
-              <input
-                type="text"
-                placeholder="Extra"
-                value={extra}
-                onChange={(e) => {
-                  const updatedExtras = [...orderDetails.extras];
-                  updatedExtras[index] = e.target.value;
-                  setOrderDetails({ ...orderDetails, extras: updatedExtras });
-                }}
-              />
-              <button
-                type="button"
-                onClick={() => handleRemoveExtra(index)}
-              >
-                Remove Extra
-              </button>
-            </div>
-          ))} */}
+          <input
+            type="text"
+            name="body"
+            placeholder="Body"
+            value={orderDetails.bodies}
+            onChange={handleChange}
+          />
+           <input
+            type="text"
+            name="extras"
+            placeholder="Add Ons"
+            value={orderDetails.extras}
+            onChange={handleChange}
+          />
           <input
             type="text"
             name="tax"
@@ -179,13 +151,6 @@ const SalesOrderForm = () => {
             value={orderDetails.license}
             onChange={handleChange}
           />
-          <button className="add-body-button" type="button" onClick={handleAddBody}>
-            Add Body
-          </button>
-
-          <button className="add-extra-button" type="button" onClick={handleAddExtra}>
-            Add Extra
-          </button>
 
           <button className="create-button" type="submit">
             Create Order

@@ -14,9 +14,9 @@ export default function AccountProfile() {
 
   const acctId = parseInt(id)
 
-  profile.orders.map(order => {
-    console.log(order.id)
-  })
+  // profile.orders.map(order => {
+  //   console.log(order.id)
+  // })
 
   const fetchAccounts = async () => {
     try {

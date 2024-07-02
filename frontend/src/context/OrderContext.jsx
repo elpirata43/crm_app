@@ -10,8 +10,10 @@ export const OrderProvider = ({ children }) => {
     price: "",
     tax: "",
     license: "",
-    bodies: "",
-    extras: "",
+    bodies: 0,
+    extras: 0,
+    notes: "",
+    condition: ""
   });
 
   const handleChange = (e) => {
@@ -22,47 +24,47 @@ export const OrderProvider = ({ children }) => {
     });
   };
 
-  const handleAddBody = () => {
-    setOrderDetails({
-      ...orderDetails,
-      bodies: [...orderDetails.bodies, ""],
-    });
-  };
+  const handleNew = (e) => {
 
-  const handleRemoveBody = (index) => {
-    const updatedBodies = [...orderDetails.bodies];
-    updatedBodies.splice(index, 1);
-    setOrderDetails({
-      ...orderDetails,
-      bodies: updatedBodies,
-    });
-  };
+  }
 
-  const handleAddExtra = () => {
-    setOrderDetails({
-      ...orderDetails,
-      extras: [...orderDetails.extras, ""],
-    });
-  };
+  // const handleAddBody = () => {
+  //   setOrderDetails({
+  //     ...orderDetails,
+  //     bodies: [...orderDetails.bodies, ""],
+  //   });
+  // };
 
-  const handleRemoveExtra = (index) => {
-    const updatedExtras = [...orderDetails.extras];
-    updatedExtras.splice(index, 1);
-    setOrderDetails({
-      ...orderDetails,
-      extras: updatedExtras,
-    });
-  };
+  // const handleRemoveBody = (index) => {
+  //   const updatedBodies = [...orderDetails.bodies];
+  //   updatedBodies.splice(index, 1);
+  //   setOrderDetails({
+  //     ...orderDetails,
+  //     bodies: updatedBodies,
+  //   });
+  // };
+
+  // const handleAddExtra = () => {
+  //   setOrderDetails({
+  //     ...orderDetails,
+  //     extras: [...orderDetails.extras, ""],
+  //   });
+  // };
+
+  // const handleRemoveExtra = (index) => {
+  //   const updatedExtras = [...orderDetails.extras];
+  //   updatedExtras.splice(index, 1);
+  //   setOrderDetails({
+  //     ...orderDetails,
+  //     extras: updatedExtras,
+  //   });
+  // };
 
   return (
     <OrderContext.Provider
       value={{
         orderDetails,
         handleChange,
-        handleAddBody,
-        handleRemoveBody,
-        handleAddExtra,
-        handleRemoveExtra,
       }}
     >
       {children}

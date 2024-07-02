@@ -31,27 +31,31 @@ module.exports = {
         allowNull: false,
       },
       price: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.DECIMAL(10,2),
         allowNull: false,
       },
       tax: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.DECIMAL(4, 2),
         allowNull: false,
       },
       license: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.DECIMAL(10,2),
         allowNull: false,
       },
       bodies: {
-        type: Sequelize.STRING,
+        type: Sequelize.DECIMAL(10,2),
         allowNull: true,
       },
       extras: {
-        type: Sequelize.STRING,
+        type: Sequelize.DECIMAL(10,2),
         allowNull: true,
       },
-      notes: {
+      condition: {
         type: Sequelize.STRING,
+        allowNull: false,
+      },
+      notes: {
+        type: Sequelize.TEXT,
         allowNull: true,
       },
       createdAt: {

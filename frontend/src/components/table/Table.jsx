@@ -1,15 +1,17 @@
 export default function Table({data, itemCount}) {
+  
   return (
     <table>
       <thead>
         <tr>
-          <th className="tm_width_3 tm_semi_bold tm_primary_color tm_gray_bg">Item</th>
+          <th className="tm_width_3 tm_semi_bold tm_primary_color tm_gray_bg">VIN/Order</th>
           <th className="tm_width_4 tm_semi_bold tm_primary_color tm_gray_bg">Description</th>
           <th className="tm_width_2 tm_semi_bold tm_primary_color tm_gray_bg">Price</th>
           <th className="tm_width_1 tm_semi_bold tm_primary_color tm_gray_bg">Qty</th>
           <th className="tm_width_2 tm_semi_bold tm_primary_color tm_gray_bg tm_text_right">Total</th>
         </tr>
       </thead>
+      
       <tbody>
         {data?.map((item, index) => (
           <tr key={index}>

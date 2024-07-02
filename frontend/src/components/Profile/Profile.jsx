@@ -328,7 +328,7 @@ const Profile = (props) => {
                     className="form-control"
                   />
                 </div>
-                <div className="mb-3">
+                {/* <div className="mb-3">
                   <label className="form-label">Address Line 2</label>
                   <input
                     name="address2"
@@ -337,7 +337,7 @@ const Profile = (props) => {
                     type="text"
                     className="form-control"
                   />
-                </div>
+                </div> */}
                 <div className="row">
                   <div className="col-lg-6"></div>
                   <div className="col-lg-6">
