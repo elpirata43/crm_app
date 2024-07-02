@@ -33,11 +33,11 @@ export default function SalesOrder() {
   //   console.log({state})
   //   return state.accounts
   // });
-
+console.log(parseInt(orderId))
   const fetchAccounts = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8000/api/accounts/orders/${orderId}`,
+        `http://localhost:8000/api/accounts/orders/${parseInt(orderId)}`,
         {
           method: "GET",
         }
