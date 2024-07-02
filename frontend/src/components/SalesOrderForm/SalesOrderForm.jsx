@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
-import {  useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from "react-router-dom";
 import { OrderContext } from "../../context/OrderContext";
-import "./SalesOrderForm.css"
+import "./SalesOrderForm.css";
 import { useSelector, useDispatch } from "react-redux";
 import { createNewOrder } from "../../store/orders";
 
 const SalesOrderForm = () => {
   const { id } = useParams();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [companyInfo, setCompanyInfo] = useState({
     companyName: "",
     address: "",
@@ -16,74 +16,65 @@ const SalesOrderForm = () => {
     zipCode: null,
     email: "",
     bodies: 0,
-    extras: 0
-  })
-  const user = useSelector(state => state.session.user)
+    extras: 0,
+  });
+  const user = useSelector((state) => state.session.user);
 
-// console.log(typeof id)
+  const navigate = useNavigate();
+  const { orderDetails, handleChange } = useContext(OrderContext);
 
-    const navigate = useNavigate();
-    const {
-      orderDetails,
-      handleChange,
-    } = useContext(OrderContext);
-
-    const fetchAccounts = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:8000/api/accounts/company/${id}`,
-          {
-            method: "GET",
-          }
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch data");
+  const fetchAccounts = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:8000/api/accounts/company/${id}`,
+        {
+          method: "GET",
         }
-        const data = await response.json();
-        setCompanyInfo(data)
-      } catch (error) {
-        console.error("Error fetching data:", error);
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
       }
-    };
-  
-    useEffect(() => {
-      if(user){
-  
-        fetchAccounts();
-      }
-    }, []);
-  
+      const data = await response.json();
+      setCompanyInfo(data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      const payload = {
-        accountId: parseInt(id),
-        ...orderDetails
-      };
-      console.log({payload})
-      
-      let newOrder;
-      try{
-       const newOrder = await dispatch(createNewOrder(id, payload))
-       console.log({newOrder})
-      }catch (err){
-        console.error(err)
-      }
+  useEffect(() => {
+    if (user) {
+      fetchAccounts();
+    }
+  }, []);
 
-      // navigate(`/sales-order/${newOrder.id}`);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const payload = {
+      accountId: parseInt(id),
+      ...orderDetails,
     };
 
+    let newOrder;
+    try {
+      const newOrder = await dispatch(createNewOrder(id, payload));
+      navigate(`/sales-order/${newOrder.id}`);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <div className="App">
       <header className="App-header">
         <h1>Create Sales Order</h1>
         <form className="company" onSubmit={handleSubmit}>
-        <h3>Bill To:</h3>
-        <span>{companyInfo.companyName}</span>
-        <span>{companyInfo.address}</span>
-        <p>{companyInfo.city}, {companyInfo.state} {companyInfo.zipCode}</p>
-        <span></span>
+          <h3>Bill To:</h3>
+          <span>{companyInfo.companyName}</span>
+          <span>{companyInfo.address}</span>
+          <p>
+            {companyInfo.city}, {companyInfo.state} {companyInfo.zipCode}
+          </p>
+          <span></span>
           <br />
           <input
             type="text"
@@ -106,38 +97,32 @@ const SalesOrderForm = () => {
             value={orderDetails.year}
             onChange={handleChange}
           />
-             <label>
-                      <input
-                          type="checkbox"
-                          name="condition"
-                          value="New"
-                          checked={
-                            orderDetails.condition && orderDetails.condition.includes("New")
-                          }
-                          onChange={handleChange}
-                        />
-                        New
-                      </label>
-                      <br />
-                      <label>
-                        <input
-                          type="checkbox"
-                          name="condition"
-                          value="Used"
-                          checked={orderDetails.condition  && orderDetails.condition.includes("Used")}
-                          onChange={handleChange}
-                        />
-                        Used
-                      </label>
-          {/* <select
-          type="checkbox"
-            name="condition"
-            value={orderDetails.condition}
-            onChange={handleChange}
-          >
-            <option value="New">New</option>
-            <option value="Used">Used</option>
-          </select> */}
+          <label>
+            <input
+              type="checkbox"
+              name="condition"
+              value="New"
+              checked={
+                orderDetails.condition && orderDetails.condition.includes("New")
+              }
+              onChange={handleChange}
+            />
+            New
+          </label>
+          <br />
+          <label>
+            <input
+              type="checkbox"
+              name="condition"
+              value="Used"
+              checked={
+                orderDetails.condition &&
+                orderDetails.condition.includes("Used")
+              }
+              onChange={handleChange}
+            />
+            Used
+          </label>
           <input
             type="text"
             name="price"
@@ -152,7 +137,7 @@ const SalesOrderForm = () => {
             value={orderDetails.bodies}
             onChange={handleChange}
           />
-           <input
+          <input
             type="number"
             name="extras"
             placeholder="Add Ons"
@@ -184,4 +169,3 @@ const SalesOrderForm = () => {
 };
 
 export default SalesOrderForm;
-

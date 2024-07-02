@@ -328,16 +328,6 @@ const Profile = (props) => {
                     className="form-control"
                   />
                 </div>
-                {/* <div className="mb-3">
-                  <label className="form-label">Address Line 2</label>
-                  <input
-                    name="address2"
-                    value={props.address2}
-                    onChange={props.handleChange}
-                    type="text"
-                    className="form-control"
-                  />
-                </div> */}
                 <div className="row">
                   <div className="col-lg-6"></div>
                   <div className="col-lg-6">

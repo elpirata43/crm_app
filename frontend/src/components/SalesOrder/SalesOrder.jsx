@@ -29,11 +29,6 @@ export default function SalesOrder() {
   const [isLoading, setIsLoading] = useState(true); // Loading state
 
   const user = useSelector((state) => state.session?.user);
-  // const profile = useSelector((state) => {
-  //   console.log({state})
-  //   return state.accounts
-  // });
-console.log(parseInt(orderId))
   const fetchAccounts = async () => {
     try {
       const response = await fetch(
@@ -125,11 +120,6 @@ console.log(parseInt(orderId))
               email={orderData.account.email}
               varient="tm_invoice_left"
             />
-            {/* <InvoiceToPayTo
-              title='Pay To' 
-              subTitle='Laralink Ltd <br /> 86-90 Paul Street, London <br /> England EC2A 4NE <br /> demo@gmail.com'
-              varient='tm_invoice_right tm_text_right'
-            /> */}
           </div>
           <div className="tm_table tm_style1 tm_mb30">
             <div className="tm_round_border">

@@ -47,7 +47,6 @@ const createOrder = (payload) => ({
 // }
 
 export const createNewOrder = (accountId, order) => async (dispatch) => {
-  console.log("In Dispatch!!")
   try {
     const res = await csrfFetch(`/api/accounts/company/${accountId}/orders`, {
       method: "POST",
