@@ -47,6 +47,7 @@ const createOrder = (payload) => ({
 // }
 
 export const createNewOrder = (accountId, order) => async (dispatch) => {
+  console.log("In Dispatch!!")
   try {
     const res = await csrfFetch(`/api/accounts/company/${accountId}/orders`, {
       method: "POST",
@@ -85,9 +86,10 @@ const initialState = {};
 const orderReducer = (state = initialState, action) => {
   switch (action.type) {
     case CREATE_ORDER: {
+      const newState = { ...state }
       const newOrder = action.payload;
-      console.log("newOrder-reducer", newOrder);
-      return { ...state, [newOrder.id]: newOrder };
+      newState[newOrder.id] = newOrder;
+      return newState;
     }
     default:
       return state;

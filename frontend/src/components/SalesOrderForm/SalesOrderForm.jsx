@@ -25,7 +25,6 @@ const SalesOrderForm = () => {
     const navigate = useNavigate();
     const {
       orderDetails,
-      setOrderDetails,
       handleChange,
     } = useContext(OrderContext);
 
@@ -57,13 +56,12 @@ const SalesOrderForm = () => {
 
     const handleSubmit = async (e) => {
       e.preventDefault();
-
       const payload = {
         accountId: parseInt(id),
         ...orderDetails
       };
       console.log({payload})
-
+      
       let newOrder;
       try{
        const newOrder = await dispatch(createNewOrder(id, payload))
@@ -108,14 +106,38 @@ const SalesOrderForm = () => {
             value={orderDetails.year}
             onChange={handleChange}
           />
-          <select
+             <label>
+                      <input
+                          type="checkbox"
+                          name="condition"
+                          value="New"
+                          checked={
+                            orderDetails.condition && orderDetails.condition.includes("New")
+                          }
+                          onChange={handleChange}
+                        />
+                        New
+                      </label>
+                      <br />
+                      <label>
+                        <input
+                          type="checkbox"
+                          name="condition"
+                          value="Used"
+                          checked={orderDetails.condition  && orderDetails.condition.includes("Used")}
+                          onChange={handleChange}
+                        />
+                        Used
+                      </label>
+          {/* <select
+          type="checkbox"
             name="condition"
             value={orderDetails.condition}
             onChange={handleChange}
           >
             <option value="New">New</option>
             <option value="Used">Used</option>
-          </select>
+          </select> */}
           <input
             type="text"
             name="price"
@@ -124,21 +146,21 @@ const SalesOrderForm = () => {
             onChange={handleChange}
           />
           <input
-            type="text"
-            name="body"
+            type="number"
+            name="bodies"
             placeholder="Body"
             value={orderDetails.bodies}
             onChange={handleChange}
           />
            <input
-            type="text"
+            type="number"
             name="extras"
             placeholder="Add Ons"
             value={orderDetails.extras}
             onChange={handleChange}
           />
           <input
-            type="text"
+            type="number"
             name="tax"
             placeholder="Sales Tax"
             value={orderDetails.tax}

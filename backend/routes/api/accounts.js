@@ -64,7 +64,7 @@ router.get("/orders/:id", async (req, res, next) => {
 router.post("/company/:id/orders", requireAuth, async (req, res, next) => {
   console.log("In Orders Route!!")
   const { id } = req.params;
-  const { vin, model, year, price, tax, license, bodies, extras, notes } =
+  const { vin, model, year, price, tax, license, bodies, extras, notes, condition } =
     req.body;
   try {
     const account = await Account.findByPk(id);
@@ -88,6 +88,7 @@ router.post("/company/:id/orders", requireAuth, async (req, res, next) => {
       license,
       bodies,
       extras,
+      condition,
       notes,
     });
 
@@ -102,6 +103,7 @@ router.post("/company/:id/orders", requireAuth, async (req, res, next) => {
       license: newOrder.license,
       bodies: newOrder.bodies,
       extras: newOrder.extras,
+      condition: newOrder.condition,
       notes: newOrder.notes,
       createdAt: newOrder.createdAt,
       updatedAt: newOrder.updatedAt,
