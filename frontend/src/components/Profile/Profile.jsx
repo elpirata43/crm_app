@@ -44,7 +44,7 @@ const Profile = (props) => {
           className="form-select"
           value={props.businessType}
           onChange={props.handleChange}
-          name="business"
+          name="businessType"
         >
           <option defaultValue>Open this select menu</option>
           <option value="Construction">Construction</option>
