@@ -118,6 +118,7 @@ import * as sessionActions from "../../store/session";
 
 function SignUp(){
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -146,7 +147,7 @@ function SignUp(){
           password,
         })
       )
-        // .then(closeModal)
+        .then(navigate('/'))
         .catch(async (res) => {
           const data = await res.json();
           if (data?.errors) {

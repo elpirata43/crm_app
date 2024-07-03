@@ -111,8 +111,8 @@ const CreateAccount = () => {
     let newAccount;
     try {
       const newAccount = await dispatch(createNewAccount(payload));
-      setBread(true);
-      showToast();  
+      // setBread(true);
+      // showToast();  
       navigate(`/account/${newAccount.id}`);
     } catch (err) {
       if (err.response) {
@@ -163,6 +163,7 @@ const CreateAccount = () => {
       <Profile
         handleSubmit={handleSubmit}
         firstName={addressInfo.firstName}
+        businessType={addressInfo.businessType}
         handleChange={handleChange}
         lastName={addressInfo.lastName}
         equipmentType={addressInfo.equipmentType}
