@@ -32,11 +32,12 @@ export default function SalesOrder() {
   const fetchAccounts = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8000/api/accounts/orders/${parseInt(orderId)}`,
+        `http://localhost:8000/api/accounts/orders/${orderId}`,
         {
           method: "GET",
         }
       );
+      console.log({response})
       if (!response.ok) {
         throw new Error("Failed to fetch data");
       }
