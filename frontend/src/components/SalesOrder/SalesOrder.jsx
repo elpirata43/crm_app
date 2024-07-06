@@ -28,11 +28,13 @@ export default function SalesOrder() {
   const [orderData, setOrderData] = useState(null);
   const [isLoading, setIsLoading] = useState(true); // Loading state
 
+  const id = parseInt(orderId)
+
   const user = useSelector((state) => state.session?.user);
   const fetchAccounts = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8000/api/accounts/orders/${orderId}`,
+        `http://localhost:8000/api/accounts/orders/${id}`,
         {
           method: "GET",
         }

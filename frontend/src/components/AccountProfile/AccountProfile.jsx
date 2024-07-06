@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate, useParams, Link, NavLink } from "react-router-dom";
-import Profile from "../Profile/Profile";
+// import Profile from "../Profile/Profile";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAccountProfile } from "../../store/accounts";
 import './AccountProfile.css'
@@ -22,7 +22,7 @@ export default function AccountProfile() {
   const fetchAccounts = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8000/api/accounts/company/${id}`,
+        `http://localhost:8000/api/accounts/company/${acctId}`,
         {
           method: "GET",
         }
