@@ -14,9 +14,6 @@ export default defineConfig(() => ({
   server: {
     proxy: {
       '/api': 'http://localhost:8000'
-    },
-    headers: {
-      'Content-Security-Policy': "default-src 'self'; script-src 'self'; connect-src 'self' http://localhost:8000",
     }
   }
 }));
