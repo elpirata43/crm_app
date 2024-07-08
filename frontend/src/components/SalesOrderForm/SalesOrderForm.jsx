@@ -4,6 +4,7 @@ import { OrderContext } from "../../context/OrderContext";
 import "./SalesOrderForm.css";
 import { useSelector, useDispatch } from "react-redux";
 import { createNewOrder } from "../../store/orders";
+import { csrfFetch } from "../../store/csrf";
 
 const SalesOrderForm = () => {
   const { id } = useParams();
@@ -19,14 +20,16 @@ const SalesOrderForm = () => {
     extras: 0,
   });
   const user = useSelector((state) => state.session.user);
-
-  const navigate = useNavigate();
+const navigate = useNavigate();
   const { orderDetails, handleChange } = useContext(OrderContext);
+
+  const acctId = parseInt(id)
+
 
   const fetchAccounts = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:8000/api/accounts/company/${id}`,
+      const response = await csrfFetch(
+        `/api/accounts/company/${acctId}`,
         {
           method: "GET",
         }
@@ -35,6 +38,7 @@ const SalesOrderForm = () => {
         throw new Error("Failed to fetch data");
       }
       const data = await response.json();
+      console.log({data})
       setCompanyInfo(data);
     } catch (error) {
       console.error("Error fetching data:", error);

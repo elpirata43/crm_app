@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useNavigate, useParams, Link, NavLink } from "react-router-dom";
 // import Profile from "../Profile/Profile";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAccountProfile } from "../../store/accounts";
+// import { fetchAccountOrders, fetchAccountProfile } from "../../store/accounts";
 import './AccountProfile.css'
 
 export default function AccountProfile() {
@@ -12,36 +12,36 @@ export default function AccountProfile() {
   const profile = useSelector((state) => state.accounts[id]);
   const user = useSelector(state => state.session.user)
 
-
+console.log(profile)
   const acctId = parseInt(id)
 
-  // profile.orders.map(order => {
-  //   console.log(order.id)
-  // })
+// useEffect(() => {
+// dispatch(fetchAccountOrders())
+// },[])
 
-  const fetchAccounts = async () => {
-    try {
-      const response = await fetch(
-        `http://localhost:8000/api/accounts/company/${acctId}`,
-        {
-          method: "GET",
-        }
-      );
-      if (!response.ok) {
-        throw new Error("Failed to fetch data");
-      }
-      const data = await response.json();
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+  // const fetchAccounts = async () => {
+  //   try {
+  //     const response = await fetch(
+  //       `http://localhost:8000/api/accounts/company/${acctId}`,
+  //       {
+  //         method: "GET",
+  //       }
+  //     );
+  //     if (!response.ok) {
+  //       throw new Error("Failed to fetch data");
+  //     }
+  //     const data = await response.json();
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+  //   }
+  // };
 
-  useEffect(() => {
-    if(user && profile && user.id === profile.ownerId){
+  // useEffect(() => {
+  //   if(user && profile && user.id === profile.ownerId){
 
-      fetchAccounts();
-    }
-  }, []);
+  //     fetchAccounts();
+  //   }
+  // }, []);
 
 
   return (

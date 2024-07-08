@@ -11,6 +11,7 @@ import InvoiceInfo from "../invoiceInfo/InvoiceInfo";
 import PaymentInfo from "../paymentInfo/PaymentInfo";
 import SubTotal from "../subTotal/SubTotal";
 import { pageTitle } from "../../helper/helper";
+import { csrfFetch } from "../../store/csrf";
 
 
 const termsAndCondition = `
@@ -33,8 +34,8 @@ export default function SalesOrder() {
   const user = useSelector((state) => state.session?.user);
   const fetchAccounts = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:8000/api/accounts/orders/${id}`,
+      const response = await csrfFetch(
+        `/api/accounts/orders/${id}`,
         {
           method: "GET",
         }

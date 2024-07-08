@@ -67,18 +67,18 @@ export const createNewOrder = (accountId, order) => async (dispatch) => {
   }
 };
 
-// export const fetchAccountOrders = () => async (dispatch) => {
-//   try {
-//     const res = await csrfFetch("/api/accounts/:accountId/orders");
-//     if (res.ok) {
-//       const data = await res.json();
-//       console.log("Fetch Orders", data)
-//       dispatch(accountOrders(data));
-//     }
-//   } catch (err) {
-//     console.error("Error loading accounts", err);
-//   }
-// };
+export const fetchAccountOrders = () => async (dispatch) => {
+  try {
+    const res = await csrfFetch("/api/accounts/:accountId/orders");
+    if (res.ok) {
+      const data = await res.json();
+      console.log("Fetch Orders", data)
+      dispatch(accountOrders(data));
+    }
+  } catch (err) {
+    console.error("Error loading accounts", err);
+  }
+};
 
 const initialState = {};
 
