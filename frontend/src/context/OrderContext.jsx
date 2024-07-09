@@ -7,11 +7,11 @@ export const OrderProvider = ({ children }) => {
     vin: "",
     model: "",
     year: "",
-    price: "",
-    tax: "",
-    license: "",
-    bodies: null ,
-    extras: null,
+    price: 0,
+    tax: 0,
+    license: 0,
+    bodies: 0 ,
+    extras: 0,
     notes: "",
     condition: ""
   });
