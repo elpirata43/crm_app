@@ -9,7 +9,8 @@
     "start": "per-env",
     "start:development": "nodemon ./bin/www",
     "start:production": "node ./bin/www",
-    "build": "node psql-setup-script.js"
+    "build": "node psql-setup-script.js",
+    "db-reset": "./bin/reset-database.sh"
   },
   "keywords": [],
   "author": "",
@@ -27,7 +28,8 @@
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
     "per-env": "^1.0.2",
-    "pg": "^8.11.3",
+    "pg": "^8.12.0",
+    "pg-hstore": "^2.3.4",
     "sequelize": "^6.36.0",
     "sequelize-cli": "^6.6.2"
   },

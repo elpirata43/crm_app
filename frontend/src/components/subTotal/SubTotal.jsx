@@ -9,9 +9,10 @@ export default function SubTotal({
   body,
   extras
 }) {
-  const formattedGrandTotal = grandTotal.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')  
+  const formattedGrandTotal = parseInt(grandTotal).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')  
   const formattedTax =   taxAmount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') 
-    return (
+
+  return (
     <table>
       <tbody>
         <tr>

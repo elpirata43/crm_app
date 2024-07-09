@@ -3,9 +3,12 @@ const { Order } = require("../models");
 const bcrypt = require("bcryptjs");
 
 let options = {};
-if (process.env.NODE_ENV === "production") {
-  options.schema = process.env.SCHEMA; // define your schema in options object
+if (process.env.NODE_ENV === "development" || process.env.NODE_ENV === "production") {
+  options.schema = process.env.SCHEMA;
 }
+// if (process.env.NODE_ENV === "production") {
+//   options.schema = process.env.SCHEMA;
+// }
 
 const orderData = [
   {
@@ -142,6 +145,6 @@ module.exports = {
     options.tableName = 'Orders'
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      accountId: { [Op.in]: [ 1, 2, 3] }
+      accountId: { [Op.in]: [ 1, 3, 4, 5, 7, 8, 9] }
     ,}, {});  }
 };
