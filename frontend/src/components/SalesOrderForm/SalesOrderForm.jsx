@@ -54,13 +54,13 @@ const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const payload = {
-      accountId: parseInt(id),
+      accountId: acctId,
       ...orderDetails,
     };
 
     let newOrder;
     try {
-      const newOrder = await dispatch(createNewOrder(id, payload));
+      const newOrder = await dispatch(createNewOrder(acctId, payload));
       navigate(`/sales-order/${newOrder.id}`);
     } catch (err) {
       console.error(err);
