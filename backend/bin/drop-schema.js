@@ -5,8 +5,8 @@ require('dotenv').config();
 const { sequelize } = require('../db/models');
 
 sequelize
-    .query(`CREATE SCHEMA IF NOT EXISTS ${process.env.SCHEMA}`, {
+    .query(`DROP SCHEMA IF EXISTS ${process.env.SCHEMA} CASCADE`, {
         logging: console.log
     })
     .then(_data => process.exit(0))
-    .catch(error => alert(error.message));
+    .catch(error => console.error(error.message));

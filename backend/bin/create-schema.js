@@ -9,4 +9,4 @@ sequelize
         logging: console.log
     })
     .then(_data => process.exit(0))
-    .catch(error => alert(error.message));
+    .catch(error => console.error(error.message));
