@@ -1,6 +1,6 @@
 export default function SubTotal({
   subTotal,
-  taxPersent,
+  taxPercent,
   licenseFee,
   taxAmount,
   grandTotal,
@@ -86,7 +86,7 @@ export default function SubTotal({
               className={`${
                 textColor === "tm_accent_color" ? textColor : "tm_ternary_color"
               }`}
-            >{`(${taxPersent}%)`}</span>
+            >{`(${taxPercent}%)`}</span>
           </td>
           <td
             className={`tm_width_3 ${

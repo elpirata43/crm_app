@@ -87,9 +87,11 @@ export default function SalesOrder() {
     (total, item) => total + item.price * item.qty,
     0
   );
-  const taxPersent = `${orderData.tax}`;
-  const licenseFee = parseInt(orderData.license, 10);
-  const taxAmount = (subTotal * taxPersent) / 100;
+
+  const taxPercent = orderData.tax !== undefined ? `${orderData.tax}` : 0;
+  const licenseFee = parseInt(orderData.license, 10) || 0;
+  const taxAmount = (subTotal * taxPercent) / 100;
+
   let grandTotal;
    if(orderData.bodies && orderData.extras){
     grandTotal = subTotal + licenseFee + taxAmount + orderData.bodies + orderData.extras
@@ -137,7 +139,7 @@ export default function SalesOrder() {
                   body={orderData.bodies ? orderData.bodies : 0}
                   extras={orderData.extras ? orderData.extras : 0}
                   subTotal={subTotal}
-                  taxPersent={taxPersent}
+                  taxPercent={taxPercent}
                   licenseFee={licenseFee}
                   taxAmount={taxAmount}
                   grandTotal={grandTotal}

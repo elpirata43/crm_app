@@ -36,11 +36,11 @@ module.exports = {
       },
       tax: {
         type: Sequelize.DECIMAL(4, 2),
-        allowNull: false,
+        allowNull: true,
       },
       license: {
         type: Sequelize.DECIMAL(10,2),
-        allowNull: false,
+        allowNull: true,
       },
       bodies: {
         type: Sequelize.DECIMAL(10,2),

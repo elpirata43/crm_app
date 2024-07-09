@@ -40,11 +40,11 @@ module.exports = (sequelize, DataTypes) => {
       },
       tax: {
         type: DataTypes.DECIMAL(4, 2),
-        allowNull: false,
+        allowNull: true,
       },
       license: {
         type: DataTypes.DECIMAL(10,2),
-        allowNull: false,
+        allowNull: true,
       },
       bodies: {
         type: DataTypes.DECIMAL(10,2),
