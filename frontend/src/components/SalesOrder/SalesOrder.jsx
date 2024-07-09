@@ -94,15 +94,14 @@ export default function SalesOrder() {
 
   let grandTotal;
    if(orderData.bodies && orderData.extras){
-    grandTotal = subTotal + licenseFee + taxAmount + orderData.bodies + orderData.extras
+    grandTotal = subTotal + licenseFee + taxAmount + parseInt(orderData.bodies) + parseInt(orderData.extras)
   }else if (orderData.bodies){
-   grandTotal = subTotal + licenseFee + taxAmount + orderData.bodies
+   grandTotal = subTotal + licenseFee + taxAmount + parseInt(orderData.bodies)
   } else if (orderData.extras){
-    grandTotal = subTotal + licenseFee + taxAmount + orderData.extras
+    grandTotal = subTotal + licenseFee + taxAmount + parseInt(orderData.extras)
   } else {
     grandTotal = subTotal + licenseFee + taxAmount
   };
-
 
 
   return (
