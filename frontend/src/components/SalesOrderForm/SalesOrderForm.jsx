@@ -20,25 +20,21 @@ const SalesOrderForm = () => {
     extras: 0,
   });
   const user = useSelector((state) => state.session.user);
-const navigate = useNavigate();
+  const navigate = useNavigate();
   const { orderDetails, handleChange } = useContext(OrderContext);
 
-  const acctId = parseInt(id)
-
+  const acctId = parseInt(id);
 
   const fetchAccounts = async () => {
     try {
-      const response = await csrfFetch(
-        `/api/accounts/company/${acctId}`,
-        {
-          method: "GET",
-        }
-      );
+      const response = await csrfFetch(`/api/accounts/company/${acctId}`, {
+        method: "GET",
+      });
       if (!response.ok) {
         throw new Error("Failed to fetch data");
       }
       const data = await response.json();
-      console.log({data})
+      console.log({ data });
       setCompanyInfo(data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -101,6 +97,8 @@ const navigate = useNavigate();
             value={orderDetails.year}
             onChange={handleChange}
           />
+          <br></br>
+          <div className="condition-box">
           <label>
             <input
               type="checkbox"
@@ -127,6 +125,9 @@ const navigate = useNavigate();
             />
             Used
           </label>
+          </div>
+          <br></br>
+          <label>Price</label>
           <input
             type="text"
             name="price"
@@ -134,6 +135,7 @@ const navigate = useNavigate();
             value={orderDetails.price}
             onChange={handleChange}
           />
+          <label>Body & Equipment</label>
           <input
             type="number"
             name="bodies"
@@ -141,6 +143,7 @@ const navigate = useNavigate();
             value={orderDetails.bodies}
             onChange={handleChange}
           />
+          <label>Extra Items</label>
           <input
             type="number"
             name="extras"
@@ -148,6 +151,7 @@ const navigate = useNavigate();
             value={orderDetails.extras}
             onChange={handleChange}
           />
+          <label>Tax</label>
           <input
             type="number"
             name="tax"
@@ -155,6 +159,7 @@ const navigate = useNavigate();
             value={orderDetails.tax}
             onChange={handleChange}
           />
+          <label>License Fee</label>
           <input
             type="text"
             name="license"
