@@ -23,7 +23,7 @@ $padding: 16px;
 
     span {
       display: block;
-      margin-bottom: $padding / 2;
+      margin-bottom: 8px;
       font-weight: bold;
     }
 
@@ -32,7 +32,7 @@ $padding: 16px;
     }
 
     p {
-      margin: $padding / 2 0;
+      margin: 8px;
     }
 
     a {
@@ -41,7 +41,7 @@ $padding: 16px;
       
       p {
         margin: 0;
-        padding: $padding / 2;
+        padding: 8px;
         border-bottom: 1px solid #eee;
 
         &:hover {
@@ -60,12 +60,12 @@ $padding: 16px;
     margin-left: $padding;
     
     h2 {
-      margin-bottom: $padding / 2;
+      margin-bottom: 8px;
       color: $primary-color;
     }
 
     p {
-      margin: $padding / 2 0;
+      margin: 8px;
     }
 
     button {

@@ -41,7 +41,7 @@ $padding: 16px;
     max-width: 300px;
 
     h4 {
-      margin-bottom: $padding / 2;
+      margin-bottom: 8px;
       color: $primary-color;
     }
 
@@ -51,7 +51,7 @@ $padding: 16px;
       
       p {
         margin: 0;
-        padding: $padding / 2;
+        padding: 8px;
         border-bottom: 1px solid #eee;
 
         &:hover {

@@ -37,12 +37,12 @@ $button-hover-color: darken($button-color, 10%);
 
       span, p {
         display: block;
-        margin-bottom: $padding / 2;
+        margin-bottom: 8px;
       }
 
       input[type="text"], input[type="number"] {
         width: calc(100% - 32px);
-        padding: $padding / 2;
+        padding: 8px;
         margin-bottom: $padding;
         border: 1px solid $input-border-color;
         border-radius: 4px;
@@ -53,17 +53,17 @@ $button-hover-color: darken($button-color, 10%);
 
         label {
           display: block;
-          margin-bottom: $padding / 2;
+          margin-bottom: 8px;
 
           input {
-            margin-right: $padding / 4;
+            margin-right: 4px;
           }
         }
       }
 
       label {
         display: block;
-        margin-bottom: $padding / 2;
+        margin-bottom: 8px;
       }
 
       .create-button {
