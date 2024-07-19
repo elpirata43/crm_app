@@ -6,7 +6,7 @@ import FilterAccounts from "../FilterAccounts/FilterAccounts";
 import AccountProfile from "../AccountProfile/AccountProfile";
 // import { AccountContext } from "../App";
 import { fetchUserAccounts } from "../../store/accounts";
-import "./DashBoard.css";
+import "./DashBoard.scss";
 
 export default function DashBoard() {
   // const [account, setAccount] = useContext(AccountContext);
@@ -29,29 +29,18 @@ export default function DashBoard() {
   }
 
   return (
-    <div className="dashboard-container">
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "flex-start",
-          width: "25%",
-          border: "solid black",
-          boxSizing: "border-box",
-          padding: "10px",
-        }}
-      >
-        <div>
-          <h4>Accounts</h4>
-          {user &&
-            accounts &&
-            Object.values(accounts).map((account) => (
-              <div key={account.id}>
-                <NavLink to={`/account/${account.id}`}>
-                  <p>Company Name: {account.companyName}</p>
-                </NavLink>
-              </div>
-            ))}
-        </div>
+    <div className="dashboard">
+      <div className="dashboard__accounts">
+        <h4>Accounts</h4>
+        {user &&
+          accounts &&
+          Object.values(accounts).map((account) => (
+            <div key={account.id}>
+              <NavLink to={`/account/${account.id}`}>
+                <p>Company Name: {account.companyName}</p>
+              </NavLink>
+            </div>
+          ))}
       </div>
       <div className="account-filter">
         {Object.values(accounts).length > 0 ? (
@@ -62,4 +51,5 @@ export default function DashBoard() {
       </div>
     </div>
   );
+  
 }

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { OrderContext } from "../../context/OrderContext";
-import "./SalesOrderForm.css";
+import "./SalesOrderForm.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { createNewOrder } from "../../store/orders";
 import { csrfFetch } from "../../store/csrf";
@@ -74,8 +74,6 @@ const SalesOrderForm = () => {
           <p>
             {companyInfo.city}, {companyInfo.state} {companyInfo.zipCode}
           </p>
-          <span></span>
-          <br />
           <input
             type="text"
             name="vin"
@@ -97,36 +95,34 @@ const SalesOrderForm = () => {
             value={orderDetails.year}
             onChange={handleChange}
           />
-          <br></br>
           <div className="condition-box">
-          <label>
-            <input
-              type="checkbox"
-              name="condition"
-              value="New"
-              checked={
-                orderDetails.condition && orderDetails.condition.includes("New")
-              }
-              onChange={handleChange}
-            />
-            New
-          </label>
-          <br />
-          <label>
-            <input
-              type="checkbox"
-              name="condition"
-              value="Used"
-              checked={
-                orderDetails.condition &&
-                orderDetails.condition.includes("Used")
-              }
-              onChange={handleChange}
-            />
-            Used
-          </label>
+            <label>
+              <input
+                type="checkbox"
+                name="condition"
+                value="New"
+                checked={
+                  orderDetails.condition &&
+                  orderDetails.condition.includes("New")
+                }
+                onChange={handleChange}
+              />
+              New
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                name="condition"
+                value="Used"
+                checked={
+                  orderDetails.condition &&
+                  orderDetails.condition.includes("Used")
+                }
+                onChange={handleChange}
+              />
+              Used
+            </label>
           </div>
-          <br></br>
           <label>Price</label>
           <input
             type="text"
@@ -167,7 +163,6 @@ const SalesOrderForm = () => {
             value={orderDetails.license}
             onChange={handleChange}
           />
-
           <button className="create-button" type="submit">
             Create Order
           </button>

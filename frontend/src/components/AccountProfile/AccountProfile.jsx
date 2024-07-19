@@ -3,7 +3,7 @@ import { useNavigate, useParams, Link, NavLink } from "react-router-dom";
 // import Profile from "../Profile/Profile";
 import { useDispatch, useSelector } from "react-redux";
 // import { fetchAccountOrders, fetchAccountProfile } from "../../store/accounts";
-import './AccountProfile.css'
+import './AccountProfile.scss'
 
 export default function AccountProfile() {
   const { id } = useParams();
@@ -45,37 +45,41 @@ console.log(profile)
 
 
   return (
-    <>
-    <div>Account Profile</div>
-    <button>Update Account</button>
-    {user && profile ? (
-      <>
-      <h2>{profile.companyName}</h2>
-      <p>Vocation: {profile.businessType}</p>
-      <p>Equipment: {profile.equipmentType}</p>
-      <p>Fleet Size: {profile.fleetSize}</p>
-      <p>Looking For: {profile.lookingFor}</p>
-      <p>Phone #: {profile.phoneNumber}</p>
-      <p>City: {profile.city}</p>
-      <div className="orders-container">
+    <div className="dashboard">
+      <div className="dashboard__quotes">
         <span>Quotes</span>
         <Link to={`/create-order/${acctId}`}><button>Create Sales Order</button></Link>
-        {profile.orders && profile.orders.length > 0 ? (
-                profile.orders.map((order, index) => (
-                  <div key={index}>
-                    <NavLink to={`/sales-order/${order.id}`}>
-                      <p>VIN: {order.vin}</p>
-                    </NavLink>
-                  </div>
-                ))
-              ) : (
-                <p>No quotes available.</p>
-              )}
+        {profile && profile.orders && profile.orders.length > 0 ? (
+          profile.orders.map((order, index) => (
+            <div key={index}>
+              <NavLink to={`/sales-order/${order.id}`}>
+                <p>VIN: {order.vin}</p>
+              </NavLink>
+            </div>
+          ))
+        ) : (
+          <p>No quotes available.</p>
+        )}
       </div>
-      </>
-    ) : (
-      <div>Must be logged in</div>
-    ) }
-    </>
-  )
+      <div className="dashboard__profile">
+        <div>Account Profile</div>
+        <button>Update Account</button>
+        {user && profile ? (
+          <>
+            <h2>{profile.companyName}</h2>
+            <p>Vocation: {profile.businessType}</p>
+            <p>Equipment: {profile.equipmentType}</p>
+            <p>Fleet Size: {profile.fleetSize}</p>
+            <p>Looking For: {profile.lookingFor}</p>
+            <p>Phone #: {profile.phoneNumber}</p>
+            <p>City: {profile.city}</p>
+          </>
+        ) : (
+          <div>Must be logged in</div>
+        )}
+      </div>
+    </div>
+  );
+  
+  
 }

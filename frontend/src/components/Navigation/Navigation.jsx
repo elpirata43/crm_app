@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import * as sessionActions from "../../store/session";
 import { fetchUserAccounts } from "../../store/accounts";
-import './Navigation.css'
+import './Navigation.scss'
 
 export default function Header() {
   const navigate = useNavigate();
@@ -31,4 +31,5 @@ export default function Header() {
       <button onClick={logout}>Logout</button>
     </div>
   );
+  
 }

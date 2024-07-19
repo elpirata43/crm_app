@@ -1,8 +1,0 @@
-.orders-container {
-    display: flex;
-    flex-direction: column;
-    max-width: 200px;
-    border: 2px solid black;
-    color: red;
-    gap: 10px;
-}
